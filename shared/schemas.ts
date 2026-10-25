@@ -144,20 +144,35 @@ export const Application = z.object({
   studioId: z.uuid(),
   providerId: z.string(),
   instructorId: z.uuid().nullable().default(null),
+  formVersion: z.string(), // which version of the provider form these answers are for
   fields: z.array(ApplicationField),
   status: ApplicationStatus,
+  version: z.number().int(), // increases on every saved edit
+  approvedVersion: z.number().int().nullable().default(null), // the exact version the owner approved
   prefillUrl: z.url().nullable().default(null), // Forma only
   approvedAt: z.string().nullable().default(null),
-  submittedAt: z.string().nullable().default(null),
+  submittedAt: z.string().nullable().default(null), // owner-reported
+  createdAt: z.string(),
   updatedAt: z.string(),
 });
 export type Application = z.infer<typeof Application>;
 
-// POST /api/draft { providerId } (header x-access-token) -> { application }
-// PATCH /api/applications?id=... (header x-access-token)
+// POST /api/applications (header x-access-token) -> { application }
+export const CreateApplicationRequest = z.object({
+  providerId: z.string().min(1).max(100),
+  instructorId: z.uuid().nullable().default(null),
+  formVersion: z.string().min(1).max(100),
+  fields: z.array(ApplicationField).max(200).default([]),
+});
+export type CreateApplicationRequest = z.infer<typeof CreateApplicationRequest>;
+
+// PATCH /api/applications?id=... (header x-access-token) -> { application }
 export const UpdateApplicationRequest = z.discriminatedUnion("action", [
-  z.object({ action: z.literal("edit"), fields: z.array(ApplicationField) }), // resets to draft
-  z.object({ action: z.literal("approve") }),
-  z.object({ action: z.literal("mark_submitted") }),
+  // Saves answers. Clears any approval. Send the version you loaded to avoid overwriting newer edits.
+  z.object({ action: z.literal("edit"), expectedVersion: z.number().int(), fields: z.array(ApplicationField).max(200) }),
+  // Approves exactly this saved version for copying.
+  z.object({ action: z.literal("approve"), version: z.number().int() }),
+  // Owner says they submitted on the provider's site. Date defaults to now.
+  z.object({ action: z.literal("mark_submitted"), submittedAt: z.iso.date().optional() }),
 ]);
 export type UpdateApplicationRequest = z.infer<typeof UpdateApplicationRequest>;
