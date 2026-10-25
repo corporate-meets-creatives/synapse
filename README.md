@@ -139,22 +139,31 @@ The owner types a name and clicks Submit; the agent does everything else, until 
 - A map of which Seattle employers and plans offer FitOn.
 - Municipal resources and other creative studios that fit mental health and wellness (art, music, martial arts).
 
+
 ## Sources
 
-- FitOn Health Partner Start Guide (July 2023)
-- FitOn Health partner flyer
-- FitOn Health help center: nominating a facility
-- Highmark: FitOn Health fitness benefit
-- Blue Cross NC: FitOn Health
-- Excellus BCBS: FitOn Health benefit flyer
-- BCBS of Rhode Island: FitOn networks
-- Premera: FitOn Health for Medicare Advantage (2023)
-- Premera: SilverSneakers replaces FitOn (2025)
-- Seattle YMCA: insurance provider partnerships
-- Trustmark: HealthFitness partners with FitOn Health
-- FitOn Health joins Workday Marketplace
-- Ramp: wellness program spend trends
-- PSRC Arts and Culture Economic Recovery Strategy
-- Salsa Vida: Salsa con Todo drop-in classes
-- The Stranger: Salsa con Todo
-- Kickoff discussion transcript, Oct 25, 2026 (Gemini meeting notes)
+- [FitOn Health Partner Start Guide (July 2023)](https://www.fitonhealth.com/hubfs/2023/Network/071823_FitOnHealth%20NetworkPartnerGuide.pptx.pdf)
+- [FitOn Health partner flyer](https://www.fitonhealth.com/hubfs/2023/Network/FitOn_Network_Solutions_Flyer_Partner_General.pdf)
+- [FitOn Health facilities page](https://www.fitonhealth.com/facilities)
+- [FitOn Health help center: nominating a facility](https://www.fitonhealth.com/migration/help/medicare/what-if-there-are-no-fitness-facilities-in-my-area-1)
+- [Microsoft Perks+](https://usbenefits.microsoft.com/us/en/perks-plus.html)
+- [HUD Seattle-Bellevue-Kent Housing Market Profile (July 2025)](https://www.huduser.gov/portal/periodicals/USHMC/reg/SeattleBellevueKentWA-HMP-July25.pdf)
+- [Highmark: FitOn Health fitness benefit](https://medicare.highmark.com/learn/plan-perks-and-services/highmark-fitness.html)
+- [Penn State: Freedom Blue fitness benefits](https://hr.psu.edu/retiree/programs-resources/freedombluefitnessbenefits)
+- [Blue Cross NC: FitOn Health](https://bluecrossnc.com/fiton)
+- [Excellus BCBS: FitOn Health benefit flyer](https://medicare.excellusbcbs.com/documents/d/excellus-medicare/fiton-health-benefit-flyer)
+- [BCBS of Rhode Island: FitOn networks](https://www.bcbsri.com/medicare/choose)
+- [TTUHSC: FitOn Health flyer (Aetna)](https://www.ttuhsc.edu/student-life/documents/FitOn_Flyer.pdf)
+- [Athletech News: FitOn acquires Peerfit](https://athletechnews.com/fiton-raises-40m-buys-peerfit/)
+- [LAFRA: FitOn Health FAQs](https://www.lafra.org/fiton-health-total-fitness-program-faqs/)
+- [Premera: FitOn Health for Medicare Advantage (2023)](https://www.premera.com/wa/producer/news/medicare/new-fitness-benefit/)
+- [Premera: SilverSneakers replaces FitOn (2025)](https://www.premera.com/documents/069123.pdf)
+- [Seattle YMCA: insurance provider partnerships](https://www.seattleymca.org/programs-for-health/insurance-provider-partnerships)
+- [Trustmark: HealthFitness partners with FitOn Health](https://trustmarkbenefits.com/newsroom/press-release/healthfitness-partnership-fiton-health)
+- [FitOn Health joins Workday Marketplace](https://www.fitonhealth.com/blog/fiton-health-joins-workday-marketplace)
+- [Ramp: wellness program spend trends](https://ramp.com/velocity/wellness-program-spend-trends)
+- [PSRC Arts and Culture Economic Recovery Strategy](https://www.psrc.org/media/6648)
+- [DanceStudio-Pro: DSOA 2024 survey on class capacity](https://blog.dancestudio-pro.com/dont-let-underfilled-classes-hold-your-studio-back)
+- [Salsa Vida: Salsa con Todo drop-in classes](https://www.salsavida.com/event/washington/seattle/salsa-con-todo-drop-in-classes/)
+- [The Stranger: Salsa con Todo](https://www.thestranger.com/food-and-drink/stepping-to-the-beat-of-salsa-con-todo-66424732/)
+- [Kickoff discussion transcript, Oct 25, 2026 (Gemini meeting notes)](https://docs.google.com/document/d/1a2AeWB7B6o24d310b6IQc7MZQqSpJhaPo-7MwCt_Ssg/edit?usp=drive_web&tab=t.qx6pwv8xqi3h)
