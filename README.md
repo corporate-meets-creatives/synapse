@@ -139,6 +139,9 @@ The Owner types a name and clicks Submit; the agent does everything else, until 
 - A map of which Seattle employers and plans offer FitOn.
 - Municipal resources and other creative studios that fit mental health and wellness (art, music, martial arts).
 
+## Brand guide
+
+Logo, color meanings, type, components and voice are documented at [`/brand/`](https://wellyfish20.vercel.app/brand/), with the source in `public/brand/`. It mirrors the tokens in `src/index.css`, so update both together.
 
 ## Sources
 

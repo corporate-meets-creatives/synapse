@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wellyfish Brand Guide</title>
+  <meta name="description" content="Logo, color, typography, components, illustration and voice guidelines for Wellyfish.">
+  <script>
+    // Relative paths need a trailing slash when served as a folder (/brand -> /brand/).
+    if (location.protocol !== "file:" && !/\/$|\.html$/.test(location.pathname)) {
+      location.replace(location.pathname + "/" + location.search + location.hash);
+    }
+  </script>
+  <link rel="icon" href="wellyfish-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="lockup" href="#top"><img src="wellyfish-mark.svg" alt="">Wellyfish</a>
+    <nav class="navpills" aria-label="Guide">
+      <a class="navpill active" href="#top">Brand guide</a>
+      <a class="navpill" href="/">Open the app</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout" id="top">
+  <nav class="toc" aria-label="Sections">
+    <ol>
+      <li><a href="#intro">Overview</a></li>
+      <li><a href="#logo">Logo</a></li>
+      <li><a href="#color">Color</a></li>
+      <li><a href="#type">Typography</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#illustration">Illustration &amp; motion</a></li>
+      <li><a href="#voice">Voice</a></li>
+      <li><a href="#tokens">Tokens</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- ============ OVERVIEW ============ -->
+    <section id="intro" class="hero">
+      <div>
+        <p class="label">Brand guide</p>
+        <h1>How Wellyfish looks and sounds.</h1>
+        <p class="lead">Wellyfish helps dance studios find wellness programs and prepare their applications. This guide documents the design system the app is built on, so new screens, decks and posts feel like the same product.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#color">Start with color</a>
+          <a class="btn btn-secondary" href="tokens.css" download>Download tokens</a>
+        </div>
+        <p class="muted small" style="margin-top:32px;max-width:28rem">Everything here mirrors <code>src/index.css</code> and <code>src/components/ui.tsx</code>. When the code changes, update this page too.</p>
+      </div>
+      <div class="halo" aria-hidden="true">
+        <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span>
+        <img class="drift" src="wellyfish-mark.svg" alt="">
+      </div>
+    </section>
+
+    <!-- ============ LOGO ============ -->
+    <section id="logo">
+      <p class="label">01 · Logo</p>
+      <h2>The jellyfish</h2>
+      <p class="section-intro">A rounded bell in the Ocean → Jelly → Coral gradient, a soft highlight, and four Lagoon tentacles. The wordmark is Fredoka SemiBold in Ink, set beside the mark with a gap of about a quarter of the mark's width.</p>
+
+      <div class="grid grid-2">
+        <div class="logo-stage"><span class="big-lockup"><img src="wellyfish-mark.svg" alt="">Wellyfish</span></div>
+        <div class="logo-stage on-ink"><span class="big-lockup"><img src="wellyfish-mark.svg" alt="">Wellyfish</span></div>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:16px">
+        <div class="panel">
+          <h3>Clear space</h3>
+          <p class="muted">Keep space equal to a quarter of the mark's width on every side.</p>
+          <div style="display:grid;place-items:center;margin-top:20px">
+            <span class="clearspace" style="padding:14px"><img src="wellyfish-mark.svg" alt="" style="width:56px;height:56px"></span>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Sizes in use</h3>
+          <p class="muted">34px in the header, 220px in the welcome illustration. Don't go below 24px, or the tentacles blur together.</p>
+          <div style="display:flex;align-items:flex-end;gap:20px;margin-top:20px">
+            <img src="wellyfish-mark.svg" alt="" style="width:24px;height:24px">
+            <img src="wellyfish-mark.svg" alt="" style="width:34px;height:34px">
+            <img src="wellyfish-mark.svg" alt="" style="width:56px;height:56px">
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Files</h3>
+          <p class="muted">The SVG matches the <code>Jellyfish</code> component in <code>ui.tsx</code>. Use it for decks, docs and social.</p>
+          <p style="margin-top:16px"><a class="btn btn-secondary" href="wellyfish-mark.svg" download>Download SVG</a></p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px">Don't</h3>
+      <div class="grid grid-4" style="margin-top:12px">
+        <figure class="dont">
+          <span class="big-lockup" style="transform:scaleX(1.35)"><img src="wellyfish-mark.svg" alt="">Wellyfish</span>
+          <figcaption>Stretch or squash it</figcaption>
+        </figure>
+        <figure class="dont">
+          <span class="big-lockup" style="filter:grayscale(1) brightness(0.6)"><img src="wellyfish-mark.svg" alt="">Wellyfish</span>
+          <figcaption>Flatten or recolor the gradient</figcaption>
+        </figure>
+        <figure class="dont">
+          <span class="big-lockup" style="transform:rotate(-14deg)"><img src="wellyfish-mark.svg" alt="">Wellyfish</span>
+          <figcaption>Rotate it</figcaption>
+        </figure>
+        <figure class="dont" style="background:repeating-linear-gradient(45deg,#f2649b 0 10px,#13a8a0 10px 20px)">
+          <span class="big-lockup" style="text-shadow:2px 2px 4px #000"><img src="wellyfish-mark.svg" alt="">Wellyfish</span>
+          <figcaption style="background:#fff;padding:4px 8px;border-radius:6px">Busy backgrounds or effects</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ COLOR ============ -->
+    <section id="color">
+      <p class="label">02 · Color</p>
+      <h2>Color tells you what to do</h2>
+      <p class="section-intro">The page stays calm: Foam background, white panels, Mist borders. The four ocean colors each carry one meaning across the whole app, so an owner can tell at a glance what's confirmed, what the AI drafted, and what still needs them. Click a swatch to copy its hex.</p>
+
+      <div class="grid swatches">
+        <button class="swatch" data-hex="#2F5BEA"><div class="chip" style="background:#2f5bea"><span>Primary</span></div><div class="meta"><div class="name">Ocean</div><div class="token"><span>--color-ocean</span><span>#2F5BEA</span></div><div class="role">Primary actions, links, current step</div></div></button>
+        <button class="swatch" data-hex="#13A8A0"><div class="chip" style="background:#13a8a0"><span>Confirmed</span></div><div class="meta"><div class="name">Lagoon</div><div class="token"><span>--color-lagoon</span><span>#13A8A0</span></div><div class="role">Confirmed, potential fit, done</div></div></button>
+        <button class="swatch" data-hex="#7B5CE6"><div class="chip" style="background:#7b5ce6"><span>AI / verify</span></div><div class="meta"><div class="name">Jelly</div><div class="token"><span>--color-jelly</span><span>#7B5CE6</span></div><div class="role">AI-drafted, needs verification, working</div></div></button>
+        <button class="swatch" data-hex="#F2649B"><div class="chip" style="background:#f2649b"><span>Needs you</span></div><div class="meta"><div class="name">Coral</div><div class="token"><span>--color-coral</span><span>#F2649B</span></div><div class="role">Needs your input, blockers</div></div></button>
+        <button class="swatch" data-hex="#1B2559"><div class="chip" style="background:#1b2559"><span>Text</span></div><div class="meta"><div class="name">Ink</div><div class="token"><span>--color-ink</span><span>#1B2559</span></div><div class="role">Headings, body, active nav pill</div></div></button>
+        <button class="swatch" data-hex="#56638A"><div class="chip" style="background:#56638a"><span>Text</span></div><div class="meta"><div class="name">Muted</div><div class="token"><span>--color-muted</span><span>#56638A</span></div><div class="role">Secondary text, hints, inactive nav</div></div></button>
+        <button class="swatch" data-hex="#F2F7FF"><div class="chip lined" style="background:#f2f7ff"><span>Surface</span></div><div class="meta"><div class="name">Foam</div><div class="token"><span>--color-foam</span><span>#F2F7FF</span></div><div class="role">Page background, hover fill</div></div></button>
+        <button class="swatch" data-hex="#DBE5F6"><div class="chip lined" style="background:#dbe5f6"><span>Line</span></div><div class="meta"><div class="name">Mist</div><div class="token"><span>--color-mist</span><span>#DBE5F6</span></div><div class="role">Borders, upcoming steps</div></div></button>
+      </div>
+
+      <h3 style="margin-top:40px">What each color means</h3>
+      <p class="muted" style="margin-bottom:16px">These come straight from <code>ProvenanceBadge</code>, <code>fitLabel</code> and <code>statusLabel</code>. Use the same color for the same meaning everywhere, including decks and emails.</p>
+      <div class="meaning">
+        <div class="meaning-row"><span class="strip" style="background:#13a8a0"></span><div><strong>Lagoon: confirmed or done</strong><p class="muted small">Facts from the owner's confirmed profile, providers that look like a fit, submitted applications, completed steps.</p><div class="examples"><span class="badge lagoon">From your confirmed profile</span><span class="badge lagoon">Potential fit</span><span class="badge lagoon">Submitted</span></div></div></div>
+        <div class="meaning-row"><span class="strip" style="background:#7b5ce6"></span><div><strong>Jelly: AI-drafted or unverified</strong><p class="muted small">Anything the AI wrote or inferred that a person should check, plus work in progress.</p><div class="examples"><span class="badge jelly">AI-drafted — review</span><span class="badge jelly">Needs verification</span><span class="badge jelly">Ready for review</span></div></div></div>
+        <div class="meaning-row"><span class="strip" style="background:#f2649b"></span><div><strong>Coral: needs the owner</strong><p class="muted small">Missing answers, failed requirements and errors. If it's Coral, the owner has to act.</p><div class="examples"><span class="badge coral">Needs your input</span><span class="badge coral">Does not meet a requirement</span><span class="badge coral">Draft</span></div></div></div>
+        <div class="meaning-row"><span class="strip" style="background:#2f5bea"></span><div><strong>Ocean: action or owner-made</strong><p class="muted small">The next thing to click, the current step, and anything the owner changed themselves.</p><div class="examples"><span class="badge ocean">Edited by you</span><span class="badge ocean">Ready for external submission</span></div></div></div>
+      </div>
+
+      <h3 style="margin-top:40px">Soft fills &amp; supporting shades</h3>
+      <p class="muted" style="margin-bottom:16px">Badges and notices pair a soft fill with a darker text shade of the same hue.</p>
+      <div class="grid swatches">
+        <button class="swatch" data-hex="#2349C4"><div class="chip" style="background:#2349c4"></div><div class="meta"><div class="name">Ocean deep</div><div class="token"><span>--color-ocean-deep</span><span>#2349C4</span></div><div class="role">Primary hover, Ocean badge text</div></div></button>
+        <button class="swatch" data-hex="#E3EBFD"><div class="chip lined" style="background:#e3ebfd"></div><div class="meta"><div class="name">Ocean soft</div><div class="token">#E3EBFD</div><div class="role">Ocean badge and notice fill</div></div></button>
+        <button class="swatch" data-hex="#DDF5F3"><div class="chip lined" style="background:#ddf5f3"></div><div class="meta"><div class="name">Lagoon soft</div><div class="token"><span>--color-lagoon-soft</span><span>#DDF5F3</span></div><div class="role">Lagoon badge and notice fill</div></div></button>
+        <button class="swatch" data-hex="#0B6F6A"><div class="chip" style="background:#0b6f6a"></div><div class="meta"><div class="name">Lagoon text</div><div class="token">#0B6F6A</div><div class="role">Text on Lagoon soft</div></div></button>
+        <button class="swatch" data-hex="#ECE7FD"><div class="chip lined" style="background:#ece7fd"></div><div class="meta"><div class="name">Jelly soft</div><div class="token"><span>--color-jelly-soft</span><span>#ECE7FD</span></div><div class="role">Jelly badge and notice fill</div></div></button>
+        <button class="swatch" data-hex="#5A3FC0"><div class="chip" style="background:#5a3fc0"></div><div class="meta"><div class="name">Jelly text</div><div class="token">#5A3FC0</div><div class="role">Text on Jelly soft</div></div></button>
+        <button class="swatch" data-hex="#FDE6EF"><div class="chip lined" style="background:#fde6ef"></div><div class="meta"><div class="name">Coral soft</div><div class="token"><span>--color-coral-soft</span><span>#FDE6EF</span></div><div class="role">Coral badge and notice fill</div></div></button>
+        <button class="swatch" data-hex="#B8296A"><div class="chip" style="background:#b8296a"></div><div class="meta"><div class="name">Coral deep</div><div class="token"><span>--color-coral-deep</span><span>#B8296A</span></div><div class="role">Error text, Coral badge text</div></div></button>
+      </div>
+      <p class="muted small" style="margin-top:12px">Ocean soft, Lagoon text and Jelly text are hard-coded in <code>ui.tsx</code> today rather than defined as theme tokens.</p>
+
+      <h3 style="margin-top:40px">Gradients</h3>
+      <div class="grid grid-2" style="margin-top:12px">
+        <div class="panel"><div class="gradient-chip" style="background:var(--gradient-bell)"></div><p style="margin-top:12px"><strong>Bell</strong> <span class="muted small">Ocean → Jelly → Coral at 135°. For the logo only.</span></p></div>
+        <div class="panel"><div class="gradient-chip" style="background:var(--gradient-halo)"></div><p style="margin-top:12px"><strong>Halo</strong> <span class="muted small">#DBE7FF → Jelly soft → Coral soft. Behind the hero jellyfish.</span></p></div>
+      </div>
+
+      <h3 style="margin-top:40px">Accessible pairings</h3>
+      <p class="muted" style="margin-bottom:16px">WCAG 2.1 contrast. Text needs 4.5:1; icons and large text (24px+, or 19px+ bold) need 3:1.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Pairing</th><th>Ratio</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pair" style="background:#f2f7ff;color:#1b2559;border:1px solid #dbe5f6">Ink on Foam</span></td><td>13.4:1</td><td class="pass">AAA · all text</td></tr>
+            <tr><td><span class="pair" style="background:#fff;color:#56638a;border:1px solid #dbe5f6">Muted on White</span></td><td>5.9:1</td><td class="pass">AA · secondary text</td></tr>
+            <tr><td><span class="pair" style="background:#f2f7ff;color:#56638a;border:1px solid #dbe5f6">Muted on Foam</span></td><td>5.5:1</td><td class="pass">AA · secondary text</td></tr>
+            <tr><td><span class="pair" style="background:#2f5bea;color:#fff">White on Ocean</span></td><td>5.5:1</td><td class="pass">AA · primary buttons</td></tr>
+            <tr><td><span class="pair" style="background:#2349c4;color:#fff">White on Ocean deep</span></td><td>7.4:1</td><td class="pass">AAA · hover state</td></tr>
+            <tr><td><span class="pair" style="background:#fff;color:#2f5bea;border:1px solid #dbe5f6">Ocean on White</span></td><td>5.5:1</td><td class="pass">AA · links, secondary buttons</td></tr>
+            <tr><td><span class="pair" style="background:#7b5ce6;color:#fff">White on Jelly</span></td><td>4.7:1</td><td class="pass">AA</td></tr>
+            <tr><td><span class="pair" style="background:#ddf5f3;color:#0b6f6a">Lagoon text on soft</span></td><td>5.3:1</td><td class="pass">AA · badges</td></tr>
+            <tr><td><span class="pair" style="background:#ece7fd;color:#5a3fc0">Jelly text on soft</span></td><td>6.0:1</td><td class="pass">AA · badges</td></tr>
+            <tr><td><span class="pair" style="background:#fde6ef;color:#b8296a">Coral deep on soft</span></td><td>5.0:1</td><td class="pass">AA · badges, errors</td></tr>
+            <tr><td><span class="pair" style="background:#e3ebfd;color:#2349c4">Ocean deep on soft</span></td><td>6.2:1</td><td class="pass">AA · badges</td></tr>
+            <tr><td><span class="pair" style="background:#13a8a0;color:#1b2559">Ink on Lagoon</span></td><td>4.9:1</td><td class="pass">AA</td></tr>
+            <tr><td><span class="pair" style="background:#f2649b;color:#1b2559">Ink on Coral</span></td><td>4.9:1</td><td class="pass">AA</td></tr>
+            <tr><td><span class="pair" style="background:#13a8a0;color:#fff">White on Lagoon</span></td><td>2.94:1</td><td class="fail">Fails, even for icons. Used for completed-step checkmarks today.</td></tr>
+            <tr><td><span class="pair" style="background:#f2649b;color:#fff">White on Coral</span></td><td>2.97:1</td><td class="fail">Fails. Put Ink on solid Coral, or use Coral soft.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ TYPOGRAPHY ============ -->
+    <section id="type">
+      <p class="label">03 · Typography</p>
+      <h2>Rounded and friendly, then clear</h2>
+      <p class="section-intro">Fredoka's soft, rounded letters give headings the same bounce as the jellyfish. Figtree handles everything else and stays easy to read in long forms. Both are on Google Fonts.</p>
+
+      <div class="grid grid-2">
+        <div class="panel font-card">
+          <p class="muted small">Display · headings and wordmark</p>
+          <div class="sample" style="font-family:var(--font-display);font-weight:600">Aa</div>
+          <h3>Fredoka</h3>
+          <p class="muted">SemiBold 600 for every heading, with −1% tracking. Medium 500 is loaded too, for softer large type.</p>
+          <p class="glyphs" style="font-family:var(--font-display);font-weight:600"><span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span>abcdefghijklmnopqrstuvwxyz</span><span>0123456789</span></p>
+        </div>
+        <div class="panel font-card">
+          <p class="muted small">Text · UI · forms</p>
+          <div class="sample" style="font-weight:600">Aa</div>
+          <h3>Figtree</h3>
+          <p class="muted">Regular 400 for body, Medium 500 for nav, SemiBold 600 for labels, buttons and badges, Bold 700 for step numbers.</p>
+          <p class="glyphs"><span>ABCDEFGHIJKLMNOPQRSTUVWXYZ</span><span>abcdefghijklmnopqrstuvwxyz</span><span>0123456789</span></p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:40px">Type scale</h3>
+      <div class="panel" style="margin-top:12px">
+        <div class="specimen">
+          <span class="spec">Display · Fredoka 600 · 36px → 60px · 1.05 line height · welcome page</span>
+          <p style="font-family:var(--font-display);font-weight:600;font-size:clamp(2.25rem,4vw + 1rem,3.75rem);line-height:1.05;letter-spacing:-0.01em">Find the right support.</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Page title · Fredoka 600 · 30px → 36px · PageTitle</span>
+          <p style="font-family:var(--font-display);font-weight:600;font-size:clamp(1.875rem,2vw + 1rem,2.25rem);line-height:1.15">Review your application</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Section heading · Fredoka 600 · 24px</span>
+          <p style="font-family:var(--font-display);font-weight:600;font-size:1.5rem;line-height:1.2">Your matches</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Panel heading · Fredoka 600 · 20px · most common heading</span>
+          <p style="font-family:var(--font-display);font-weight:600;font-size:1.25rem;line-height:1.25">Business details</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Subheading · Fredoka 600 · 16px</span>
+          <p style="font-family:var(--font-display);font-weight:600;font-size:1rem">Class schedule</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Lead · Figtree 400 · 18px · Muted</span>
+          <p class="muted" style="font-size:1.125rem">Discover nearby providers and prepare your application using your business information.</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Body · Figtree 400 · 16px · 1.5 line height · Ink</span>
+          <p style="max-width:40rem">We filled in what we could from your website. Check each answer, then approve it before anything is shared.</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Small · Figtree 400 · 14px · Muted · hints and helper text</span>
+          <p class="muted small">You review every answer before anything is shared.</p>
+        </div>
+        <div class="specimen">
+          <span class="spec">Badge · Figtree 600 · 12px</span>
+          <p><span class="badge lagoon">Potential fit</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMPONENTS ============ -->
+    <section id="components">
+      <p class="label">04 · Components</p>
+      <h2>Building blocks</h2>
+      <p class="section-intro">These mirror the components in <code>src/components/ui.tsx</code>. Corners are generous, buttons and badges are always pills, and nothing has a drop shadow.</p>
+
+      <div class="panel">
+        <h3>Buttons</h3>
+        <p class="muted small">Figtree 600 · 16px · 10px × 20px padding · full radius</p>
+        <div class="actions" style="margin-top:20px">
+          <button class="btn btn-primary" type="button">Find providers</button>
+          <button class="btn btn-secondary" type="button">My applications</button>
+          <button class="btn btn-quiet" type="button">Skip for now</button>
+          <button class="btn btn-primary" type="button" disabled><span class="spinner" aria-hidden="true"></span>Matching</button>
+        </div>
+        <div class="table-wrap" style="margin-top:24px">
+          <table>
+            <thead><tr><th>Variant</th><th>When to use</th></tr></thead>
+            <tbody>
+              <tr><td><code>primary</code></td><td>The one main action on a screen, such as Find providers or Approve answers.</td></tr>
+              <tr><td><code>secondary</code></td><td>An equal-weight alternative next to the primary, such as My applications. White fill with a 2px Ocean border.</td></tr>
+              <tr><td><code>quiet</code></td><td>Low-stakes actions like Skip, Back or Edit. Ocean text, underlined on hover.</td></tr>
+              <tr><td><code>busy</code></td><td>Any variant while work runs. Shows a spinner, disables the button, and keeps the label.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <div class="panel">
+          <h3>Badges</h3>
+          <p class="muted small">Soft fill, darker text of the same hue, 12px SemiBold. Each tone keeps its color meaning.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+            <span class="badge lagoon">From your confirmed profile</span>
+            <span class="badge jelly">AI-drafted — review</span>
+            <span class="badge coral">Needs your input</span>
+            <span class="badge ocean">Edited by you</span>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Steps</h3>
+          <p class="muted small">Lagoon check for done, Ocean for current, Mist for upcoming.</p>
+          <ol class="steps" aria-label="Progress" style="margin-top:16px">
+            <li class="done"><span class="dot">✓</span>Profile</li>
+            <li class="current" aria-current="step"><span class="dot">2</span>Need</li>
+            <li><span class="dot">3</span>Matches</li>
+            <li><span class="dot">4</span>Apply</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <h3>Notices</h3>
+        <p class="muted small">12px radius, a soft fill and a tinted border. Coral notices use <code>role="alert"</code>; the rest use <code>role="status"</code>.</p>
+        <div class="grid grid-2" style="margin-top:16px">
+          <div class="notice ocean"><p class="title">We're reading your website</p><p class="body">This can take a few seconds.</p></div>
+          <div class="notice lagoon"><p class="title">Profile confirmed</p><p class="body">We'll use these details to fill your applications.</p></div>
+          <div class="notice jelly"><p class="title">Some answers were drafted by AI</p><p class="body">Review them before you approve.</p></div>
+          <div class="notice coral"><p class="title">Two questions need your input</p><p class="body">We couldn't find these on your website.</p></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <h3>Fields</h3>
+        <p class="muted small">SemiBold label, 12px radius, Mist border. Errors switch the border to Coral and the message to Coral deep.</p>
+        <div class="grid grid-2" style="margin-top:16px">
+          <div class="field">
+            <label for="f1">Studio name <span class="badge lagoon">From your confirmed profile</span></label>
+            <input id="f1" value="Salsa con Todo">
+            <p class="hint">As it appears on your website.</p>
+          </div>
+          <div class="field error">
+            <label for="f2">Weekly class count <span class="badge coral">Needs your input</span></label>
+            <input id="f2" placeholder="e.g. 12" aria-invalid="true" aria-describedby="f2e">
+            <p class="err" id="f2e">Enter a number.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <h3>Header</h3>
+        <p class="muted small">White at 80% with blur, Mist bottom border. Lockup on the left, nav pills on the right: active is Ink with white text, inactive is Muted with a Foam hover.</p>
+        <div style="margin-top:16px;border:1px solid var(--color-mist);border-radius:var(--radius-field);background:#fff;padding:12px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+          <span class="lockup"><img src="wellyfish-mark.svg" alt="">Wellyfish</span>
+          <span class="navpills"><a class="navpill active" href="#components">Find providers</a><a class="navpill" href="#components">My applications</a><a class="navpill" href="#components">Business profile</a></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ILLUSTRATION & MOTION ============ -->
+    <section id="illustration">
+      <p class="label">05 · Illustration &amp; motion</p>
+      <h2>One jellyfish, gently drifting</h2>
+      <p class="section-intro">The product uses illustration rather than photography. The hero is the jellyfish on a soft gradient halo, with a few small bubbles in the brand colors.</p>
+
+      <div class="grid grid-2" style="align-items:center">
+        <div class="halo" style="max-width:320px" aria-hidden="true">
+          <span class="bubble b1"></span><span class="bubble b2"></span><span class="bubble b3"></span>
+          <img class="drift" src="wellyfish-mark.svg" alt="">
+        </div>
+        <div class="grid" style="gap:12px">
+          <div class="panel say"><p class="say-label">Do</p><p>Use the halo (inset circle, Halo gradient) behind the large jellyfish.</p></div>
+          <div class="panel say"><p class="say-label">Do</p><p>Add two or three bubbles at most: thin outlines in Lagoon or Coral at 60%, or a filled dot in Ocean at 40%.</p></div>
+          <div class="panel say"><p class="say-label">Do</p><p>Let the jellyfish drift: 10px up and down over 6s, ease-in-out, looping.</p></div>
+          <div class="panel not"><p class="say-label">Don't</p><p>Animate anything else. Drift is the one orchestrated motion, and it stops for <code>prefers-reduced-motion</code>.</p></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:24px">
+        <h3>Motion</h3>
+        <pre class="code"><code>@keyframes drift { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+.drift { animation: drift 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .drift { animation: none; } }</code></pre>
+        <p class="muted small" style="margin-top:12px">Beyond drift, only spinners (while work runs) and short color transitions on hover.</p>
+      </div>
+    </section>
+
+    <!-- ============ VOICE ============ -->
+    <section id="voice">
+      <p class="label">06 · Voice</p>
+      <h2>Takes the thinking out of it</h2>
+      <p class="section-intro">Our users are studio owners who teach between admin tasks. Every sentence should save them time, tell them what happens next, and make clear that they're in control. Tagline: <em>There's plenty of fish in the sea.</em></p>
+
+      <div class="grid grid-4">
+        <div class="panel"><h3>Plain</h3><p class="muted">Short sentences, everyday words. "Find providers," not "Explore opportunities."</p></div>
+        <div class="panel"><h3>Honest about certainty</h3><p class="muted">Say "Potential fit" and "Needs verification." Never promise someone qualifies.</p></div>
+        <div class="panel"><h3>Owner in control</h3><p class="muted">The owner reviews and submits. We prepare, and we never act for them.</p></div>
+        <div class="panel"><h3>Says what's next</h3><p class="muted">Every status comes with the next step: "Answer the remaining questions."</p></div>
+      </div>
+
+      <div class="pairs" style="margin-top:16px">
+        <div class="panel say"><p class="say-label">Say</p><p class="quote">“Potential fit”</p></div>
+        <div class="panel not"><p class="say-label">Not</p><p class="quote">“You qualify!”</p></div>
+        <div class="panel say"><p class="say-label">Say</p><p class="quote">“AI-drafted — review”</p></div>
+        <div class="panel not"><p class="say-label">Not</p><p class="quote">“Auto-completed ✓”</p></div>
+        <div class="panel say"><p class="say-label">Say</p><p class="quote">“You review every answer before anything is shared.”</p></div>
+        <div class="panel not"><p class="say-label">Not</p><p class="quote">“Our AI handles your applications end to end.”</p></div>
+        <div class="panel say"><p class="say-label">Say</p><p class="quote">“Two questions need your input.”</p></div>
+        <div class="panel not"><p class="say-label">Not</p><p class="quote">“Error: incomplete submission.”</p></div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <h3>Writing the name</h3>
+        <p class="muted">Always <strong style="color:var(--color-ink)">Wellyfish</strong>: one word, capital W. Never "WellyFish," "Welly Fish" or "Wellyfish AI."</p>
+      </div>
+    </section>
+
+    <!-- ============ TOKENS ============ -->
+    <section id="tokens">
+      <p class="label">07 · Tokens</p>
+      <h2>For designers &amp; developers</h2>
+      <p class="section-intro">In the app, use the Tailwind classes generated from <code>src/index.css</code>, such as <code>bg-ocean</code>, <code>text-muted</code> and <code>rounded-panel</code>. Outside the app, link <code>tokens.css</code>; it uses the same names.</p>
+
+      <div class="grid grid-2">
+        <div class="panel">
+          <h3>Radius</h3>
+          <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+            <div class="shape-demo" style="border-radius:var(--radius-field)"><code>field · 12</code></div>
+            <div class="shape-demo" style="border-radius:var(--radius-panel)"><code>panel · 20</code></div>
+            <div class="shape-demo" style="border-radius:var(--radius-full)"><code>full</code></div>
+          </div>
+          <p class="muted small" style="margin-top:12px">Field for inputs and notices, panel for cards, full for buttons, badges and nav pills.</p>
+        </div>
+        <div class="panel">
+          <h3>Spacing &amp; layout</h3>
+          <div style="margin-top:8px">
+            <div class="token-row"><code>max-w-5xl · 1024px</code><span class="muted small">Content width</span></div>
+            <div class="token-row"><code>px-4 · 16px</code><span class="muted small">Page gutter</span></div>
+            <div class="token-row"><code>p-5 / sm:p-6</code><span class="muted small">Panel padding, 20px → 24px</span></div>
+            <div class="token-row"><code>gap-3 · 12px</code><span class="muted small">Between buttons</span></div>
+            <div class="token-row"><code>outline 3px Ocean</code><span class="muted small">Focus ring, 2px offset</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <h3>Quick start</h3>
+        <pre class="code"><code>&lt;link rel="stylesheet" href="https://wellyfish20.vercel.app/brand/tokens.css"&gt;
+
+.button {
+  background: var(--color-ocean);
+  color: #fff;
+  border-radius: var(--radius-full);
+  font: 600 1rem/1.5 var(--font-sans);
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-ink);
+}</code></pre>
+        <p style="margin-top:16px"><a class="btn btn-primary" href="tokens.css" download>Download tokens.css</a></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span class="lockup" style="font-size:1.125rem"><img src="wellyfish-mark.svg" alt="" style="width:24px;height:24px">Wellyfish brand guide</span>
+  <span>Source of truth: <code>src/index.css</code> · <code>src/components/ui.tsx</code></span>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // Copy hex on swatch click
+  const toast = document.getElementById("toast");
+  let toastTimer;
+  document.addEventListener("click", async (e) => {
+    const el = e.target.closest("[data-hex]");
+    if (!el) return;
+    try {
+      await navigator.clipboard.writeText(el.dataset.hex);
+      toast.textContent = `Copied ${el.dataset.hex}`;
+    } catch {
+      toast.textContent = el.dataset.hex;
+    }
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1600);
+  });
+
+  // Highlight the current section in the sidebar
+  const links = [...document.querySelectorAll(".toc a")];
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${entry.target.id}`));
+      }
+    }
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("main section").forEach((s) => observer.observe(s));
+</script>
+</body>
+</html>
