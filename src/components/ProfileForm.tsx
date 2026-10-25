@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import type { InstructorInput, StudioProfileInput } from "../../shared/schemas";
 import { Badge, Button, Notice, Panel, TextArea, TextField } from "./ui";
 import { INSTRUCTOR_QUESTIONS } from "../lib/labels";
+import ClassTypePicker from "../features/profile/ClassTypePicker";
 
 type Meta = StudioProfileInput["fieldMeta"];
 export type ProfileDraft = Partial<StudioProfileInput> & { fieldMeta?: Meta };
@@ -117,7 +118,11 @@ export default function ProfileForm({
             <div className="sm:col-span-2">{text("name", "Business name")}</div>
             <div className="sm:col-span-2">{text("website", "Website", { placeholder: "yourstudio.com" })}</div>
             {list("danceStyles", "Dance styles", "Ballroom, Latin, Ballet")}
-            {list("classTypes", "Services and class types", "Group classes, Private lessons")}
+            <ClassTypePicker value={p.classTypes ?? []} badge={badge("classTypes")}
+              onChange={(next) => setP((cur) => ({
+                ...cur, classTypes: next,
+                fieldMeta: cur.fieldMeta?.classTypes ? { ...cur.fieldMeta, classTypes: { ...cur.fieldMeta.classTypes, provenance: "owner_edited" } } : cur.fieldMeta,
+              }))} />
             <div className="sm:col-span-2">{text("address", "Street address")}</div>
             {text("city", "City")}
             <div className="grid grid-cols-2 gap-4">{text("state", "State")}{text("zip", "ZIP code")}</div>
