@@ -1,30 +1,30 @@
 # Wellyfish
 
-*There's plenty of fish in the sea.*
+*There's plenty of benefits in the sea.*
 
 Oct 25, 2026 · Claude Impact Lab Hackathon, Seattle
 
-**Wellyfish:** takes the thinking out of applying to corporate and healthcare wellness benefit vendors for small businesses, starting with FitOn Health (today's use case; expanding to other platforms in the future). The owner types the studio's name, the agent fills the FitOn facility intake form, and the owner clicks Submit. Members with employer- or health-plan-funded fitness credits can then book the studio's classes.
+**Wellyfish:** takes the thinking out of applying to corporate and wellness benefit hub vendors for small businesses, starting with FitOn Health (today's use case with the ability to scale to other platforms in the future). The owner types the studio's name, the agent fills the FitOn facility intake form, then the owner clicks Submit. Members with employer- or health-plan-funded fitness credits can then book the studio's classes.
 
-**Mission:** connect small creative businesses to the wellness dollars employers and health plans have already set aside, so burned-out people get to dance and studios get paid.
+**Mission:** connect small to mid-sized creative businesses to the wellness dollars employers and health plans have already set aside, so burned-out people get to dance and studios get paid.
 
-## The problem
+## The Problem
 
-Large employers often set aside wellness budgets for their employees. Microsoft is the clearest example in Seattle. Its Perks+ program gives each US corporate employee \$1,500 a year for wellbeing, and the policy names dance under both fitness classes and learning (Microsoft Perks+). Microsoft employs about 51,400 people in the Seattle metro division (HUD Seattle-Bellevue-Kent profile, July 2025), so one company alone puts up to roughly \$77 million a year within reach of local studios.
+Large employers often set aside wellness budgets for their employees. Microsoft is one significant example in the Seattle area. Its perks+ program gives each US corporate employee $1,500 a year for wellbeing, and the policy names dance under both fitness classes and learning (Microsoft Perks+). Microsoft employs about 51,400 people in the Seattle metro division (HUD Seattle-Bellevue-Kent profile, July 2025), so one company alone puts up to roughly $77 million a year within reach of local studios.
 
 That money moves through benefit platforms. Perks+ runs on Forma, and many other employers and health plans buy FitOn Health, which serves more than 19,000 employers alongside national health plans, including Medicare plans (FitOn Health partner guide). FitOn members get monthly credits and spend them at the gyms and studios in its network. A studio outside the network doesn't exist for them.
 
 That money tends to land at the big chains. On employer wellness budgets tracked by Ramp, spending at low-cost gym chains grew 20% while boutique studios fell 3% year over year (Ramp). A chain has staff to manage benefit partnerships. A two-instructor dance studio doesn't, so it never shows up in the app where members look.
 
-Small studios need that demand. In 2021 the average Puget Sound arts and culture worker earned \$52,400 including benefits, 52.8% below the regional average (PSRC), and about 30% of cultural workers surveyed were considering leaving the sector (PSRC). Nearly 60% of dance studios nationally are under 75% capacity or don't know their capacity (DSOA 2024 survey, via DanceStudio-Pro). Every empty spot in Friday's class is revenue that's gone for good.
+Small studios need that demand. In 2021 the average Puget Sound arts and culture worker earned $52,400 including benefits, 52.8% below the regional average (PSRC), and about 30% of cultural workers surveyed were considering leaving the sector (PSRC). Nearly 60% of dance studios nationally are under 75% capacity or don't know their capacity (DSOA 2024 survey, via DanceStudio-Pro). Every empty spot in Friday's class is revenue that's gone for good.
 
 The door is already open. FitOn markets itself to studios as a free-to-join bridge to insurance dollars (FitOn Health partner flyer). But owners don't know it exists, can't tell whether they'd qualify, and don't have time between classes to work out the application. Wellyfish takes the thinking out of that step.
 
-The business owner we're building with has a simple mission: make art accessible to overwhelmed, burnt-out professionals. Those people already have money set aside to spend on it. The studios just can't see it.
+The business owner we're building with has a simple mission: make art accessible to overwhelmed, burnt-out professionals. Those people already have money set aside to spend on it. The studios just don't see it.
 
 ## Users
 
-**The studio owner is the primary user.** They run a small Seattle-area studio and often teach the classes too, doing the business side in the gaps between them. They grow through word of mouth and relationships, have little budget, and want proof a tool works before they give it their time. Our example is Salsa con Todo, a Latin dance school in its own studio in Fremont (The Stranger). It's well loved and well established, and it still isn't visible to anyone browsing their fitness benefit.
+**The studio owner is the primary user.** They run a small Seattle-area studio and often teach the classes too, doing the business side in the gaps between them. They grow through word of mouth and relationships, have little budget, and want proof a tool works before they give it their time. Our example is Salsa con Todo, a Latin dance school in its own studio in Fremont (The Stranger). It's well loved and well established, but is still not visible to anyone browsing employee fitness benefit.
 
 **The FitOn member benefits too.** Their employer or health plan gives them monthly credits, and they might happily spend them on a salsa class. But they default to gyms, because that's what the app shows them. Many FitOn members come through Medicare plans, which suits Latin and ballroom studios, whose students tend to skew older.
 
@@ -38,7 +38,7 @@ Based on our discovery with our Subject Matter Expert and business owner Diana T
 
 - **They don't know to look.** Nothing tells a Fremont salsa teacher that a student's employer or health plan funds benefits that could cover a class at their studio. Creatives think about finding a space to do what they do well, not about which programs could subsidize them.
 - **They can't tell what fits.** FitOn is invitation-based and screens studios on six criteria, from instructors to community involvement. An owner has no easy way to know whether they'd qualify or how to present themselves.
-- **Applying eats teaching time.** Every hour spent on partner forms is an hour not spent teaching or running the studio.
+- **Applying eats teaching time.** Every hour spent on wellness hub submission forms is an hour not spent teaching or running the studio.
 
 Signals from the Seattle small-business survey: getting people in the door is the top challenge, owners want tools that fit what they already use, and value has to show fast.
 
@@ -102,7 +102,7 @@ FitOn Health credits reach a studio only if the studio is in FitOn's network. Ow
 
 ## System design
 
-The owner types a name and clicks Submit; the agent does everything else, until the human confirms and hits submit. The fit check is a future feature.
+The Owner types a name and clicks Submit; the agent does everything else, until the human confirms and hits submit. The fit check is a future feature.
 
 ### Components
 
