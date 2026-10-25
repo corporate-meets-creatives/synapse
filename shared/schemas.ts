@@ -18,6 +18,8 @@ export const InstructorInput = z.object({
   name: z.string().min(1).max(200),
   cprCertified: z.boolean().optional(),
   certifications: z.array(z.string().max(200)).max(20).default([]),
+  // Owner-reported yes/no answers the matcher reads (adultAttested, hasLiabilityInsurance, ...). Missing = unknown.
+  requirementAnswers: z.record(z.string(), z.boolean()).default({}),
 });
 export type InstructorInput = z.infer<typeof InstructorInput>;
 
@@ -25,6 +27,7 @@ export const StudioProfileInput = z.object({
   name: z.string().min(1).max(200),
   website: z.url().optional(),
   address: z.string().max(300).optional(),
+  zip: z.string().max(20).optional(),
   city: z.string().max(100),
   state: z.string().max(50),
   phone: z.string().max(50).optional(),
@@ -34,6 +37,11 @@ export const StudioProfileInput = z.object({
   classTypes: z.array(z.string().max(100)).max(20).default([]),
   schedulingPlatform: z.string().max(100).optional(),
   hasLiabilityInsurance: z.boolean().optional(),
+  googleBusinessProfileVerified: z.boolean().optional(),
+  hasPriceList: z.boolean().optional(),
+  legalStructure: z.string().max(100).optional(),
+  yearsOperating: z.number().int().min(0).max(200).optional(),
+  employeeCount: z.number().int().min(0).max(100000).optional(),
   description: z.string().max(2000).optional(),
   fieldMeta: z.record(z.string(), FieldMeta).default({}),
 });
