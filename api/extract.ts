@@ -5,7 +5,7 @@ import { runExtraction } from "../server/extraction/index.js";
 // Returns JSON only. Never writes to the database.
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Cache-Control", "no-store");
-  const fail = (status: number, code: string, message: string) => res.status(status).json({ error: message, details: { code } });
+  const fail = (status: number, code: string, message: string) => res.status(status).json({ error: { code, message, fieldErrors: {} } });
 
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
