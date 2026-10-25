@@ -4,6 +4,7 @@ import { INTAKE_STEPS, CATEGORIES } from "../lib/steps";
 import { emptyNeed, savedNeed, type Need as NeedT } from "../lib/local";
 import { navigate } from "../lib/router";
 import { matchCache } from "../lib/session";
+import PrivateLink from "../components/PrivateLink";
 
 export default function Need({ token }: { token: string }) {
   const [n, setN] = useState<NeedT>(() => savedNeed.get(token) ?? { ...emptyNeed, category: CATEGORIES[0] });
@@ -22,6 +23,7 @@ export default function Need({ token }: { token: string }) {
       <PageTitle sub="This helps us explain why each provider fits. You can change it any time.">
         What does your business need help with?
       </PageTitle>
+      <div className="mb-6 max-w-2xl"><PrivateLink token={token} /></div>
       <form onSubmit={submit} className="max-w-2xl">
         <Panel className="space-y-5">
           <TextArea id="n-desc" label="Describe it in your own words" value={n.description}

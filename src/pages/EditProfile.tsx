@@ -4,6 +4,7 @@ import { Loading, Notice, PageTitle } from "../components/ui";
 import { useStudio, matchCache } from "../lib/session";
 import { api } from "../lib/api";
 import { NotFoundLink } from "./NotFound";
+import PrivateLink from "../components/PrivateLink";
 
 export default function EditProfile({ token }: { token: string }) {
   const { studio, error } = useStudio(token);
@@ -14,6 +15,7 @@ export default function EditProfile({ token }: { token: string }) {
     <>
       <PageTitle sub="Changes here are used for new matches and new applications.">Business profile</PageTitle>
       {saved && <div className="mb-6 max-w-2xl"><Notice tone="lagoon" title="Profile saved" /></div>}
+      <div className="mb-6 max-w-2xl"><PrivateLink token={token} compact /></div>
       <ProfileForm
         key={studio.updated_at}
         initial={studio.profile}
