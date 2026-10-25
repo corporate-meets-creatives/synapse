@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+/* Wellyfish design tokens — every color, font and radius in the app comes from here. */
+@theme {
+  --color-ink: #1b2559;        /* deep ocean: text */
+  --color-muted: #56638a;      /* secondary text */
+  --color-ocean: #2f5bea;      /* primary actions */
+  --color-ocean-deep: #2349c4; /* primary hover */
+  --color-lagoon: #13a8a0;     /* turquoise: confirmed, potential fit */
+  --color-lagoon-soft: #ddf5f3;
+  --color-jelly: #7b5ce6;      /* purple: AI drafted, needs verification */
+  --color-jelly-soft: #ece7fd;
+  --color-coral: #f2649b;      /* pink accent: needs your input */
+  --color-coral-deep: #b8296a; /* readable pink text, blockers */
+  --color-coral-soft: #fde6ef;
+  --color-foam: #f2f7ff;       /* page background */
+  --color-mist: #dbe5f6;       /* borders */
+  --color-surface: #ffffff;
+
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Figtree", system-ui, sans-serif;
+
+  --radius-field: 0.75rem;
+  --radius-panel: 1.25rem;
+}
+
+@layer base {
+  html { background: var(--color-foam); color: var(--color-ink); }
+  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
+  :focus-visible { outline: 3px solid var(--color-ocean); outline-offset: 2px; border-radius: 6px; }
+}
+
+/* The one orchestrated motion: the welcome jellyfish drifts. */
+@keyframes drift { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+.drift { animation: drift 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .drift { animation: none; } }
