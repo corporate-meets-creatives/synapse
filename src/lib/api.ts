@@ -39,6 +39,7 @@ async function call<T>(path: string, init: RequestInit & { token?: string } = {}
 export type RequirementResult = {
   requirementId: string; label: string; stage: "application" | "onboarding" | "teaching";
   result: "met" | "not_met" | "unknown"; source?: { url: string; passage?: string };
+  basis?: "extracted" | "owner_reported" | "owner_confirmed"; // where the evidence for a met requirement came from
 };
 export type MatchEntry = {
   providerId: string; providerName: string; instructorId: string | null;
@@ -50,6 +51,9 @@ export type MatchEntry = {
   requirementsVerified: boolean; lastChecked: string; explanation: string;
   explanationSource: "ai" | "deterministic_fallback";
   instructorRequired?: boolean; // FLEX without a chosen instructor: studio details alone are not enough
+  fitLabel?: "Potential fit" | "More information needed" | "Known requirement not met";
+  eligibilityConfirmed?: false; // only the provider decides eligibility
+  linkEvidence?: { status: "team_provided" | "reachable" | "unverified"; note: string; checkedAt: string };
 };
 
 // ---- follow-up questions (shape returned by /api/questions) ----

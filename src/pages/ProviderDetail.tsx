@@ -4,7 +4,7 @@ import { navigate } from "../lib/router";
 import { Link } from "../components/Link";
 import { api, ApiError, type MatchEntry, type RequirementResult } from "../lib/api";
 import { useStudio, matchCache } from "../lib/session";
-import { fitLabel } from "../lib/labels";
+import { fitOf, linkStatus } from "../lib/labels";
 import { formatDate, providerById } from "../lib/catalog";
 import { FORM_VERSION, prefill } from "../lib/forms";
 import { NotFoundLink } from "./NotFound";
@@ -55,7 +55,9 @@ export default function ProviderDetail({ token, providerId }: { token: string; p
   if (!entry) return <Notice tone="coral" title="We couldn't find this provider in your results."><Link to={`/s/${token}/results`} className="text-ocean underline">Back to results</Link></Notice>;
 
   const cat = providerById(providerId);
-  const fit = fitLabel[entry.readiness];
+  const fit = fitOf(entry);
+  const link = linkStatus(entry);
+  const external = entry.workflowMode === "external_link";
   const app = entry.requirementResults.filter((r) => r.stage === "application");
   const later = entry.requirementResults.filter((r) => r.stage !== "application");
   const who = entry.instructorId ? studio.instructors.find((i) => i.id === entry.instructorId)?.name : null;
@@ -92,6 +94,13 @@ export default function ProviderDetail({ token, providerId }: { token: string; p
             <h2 className="text-xl">How they can help</h2>
             <p className="mt-2">{entry.explanation}</p>
           </Panel>
+          {entry.missingToApply.length > 0 && (
+            <Panel>
+              <h2 className="text-xl">Information still needed to apply</h2>
+              <ul className="mt-3 list-disc space-y-1 pl-5">{entry.missingToApply.map((m) => <li key={m}>{m}</li>)}</ul>
+              <p className="mt-3 text-sm text-muted">Items we don't know yet are not counted against you.</p>
+            </Panel>
+          )}
           <Panel>
             <h2 className="text-xl">Fit assessment</h2>
             <div className="mt-4 grid gap-6 sm:grid-cols-3">
@@ -115,22 +124,52 @@ export default function ProviderDetail({ token, providerId }: { token: string; p
         </div>
 
         <aside className="space-y-6">
-          <Panel>
-            <h2 className="text-xl">Process</h2>
-            <ol className="mt-3 list-decimal space-y-2 pl-5">
-              <li>We prepare your answers from your confirmed profile.</li>
-              <li>You review and approve every answer.</li>
-              <li>You finish on {entry.providerName}'s website. We never submit for you.</li>
-            </ol>
-            {fail && <div className="mt-4"><Notice tone="coral" title={fail} /></div>}
-            <Button className="mt-5 w-full" busy={busy} onClick={prepare}>Prepare application</Button>
-          </Panel>
+          {external ? (
+            <Panel>
+              <h2 className="text-xl">Apply on {entry.providerName}'s site</h2>
+              <p className="mt-2 text-sm text-muted">
+                We can't confirm eligibility, acceptance or availability. You apply directly with {entry.providerName}, and we don't prepare or submit anything for you.
+              </p>
+              {entry.externalUrl && (
+                <a href={entry.externalUrl} target="_blank" rel="noopener noreferrer"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ocean px-5 py-2.5 font-semibold text-white hover:bg-ocean-deep">
+                  Apply on their site<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+              <div className="mt-3"><Badge tone={link.tone}>{link.text}</Badge></div>
+            </Panel>
+          ) : (
+            <Panel>
+              <h2 className="text-xl">Process</h2>
+              <ol className="mt-3 list-decimal space-y-2 pl-5">
+                <li>We prepare your answers from your confirmed profile.</li>
+                <li>You review and approve every answer.</li>
+                <li>You finish on {entry.providerName}'s website. We never submit for you.</li>
+              </ol>
+              {fail && <div className="mt-4"><Notice tone="coral" title={fail} /></div>}
+              {entry.instructorRequired ? (
+                <>
+                  <p className="mt-4 text-sm text-muted">This program applies to one instructor at a time. Choose or add the instructor first.</p>
+                  <Button className="mt-3 w-full" onClick={() => navigate(`/s/${token}/providers/${providerId}/questions`)}>Choose or add the instructor</Button>
+                </>
+              ) : (
+                <Button className="mt-5 w-full" busy={busy} onClick={prepare}>Prepare application</Button>
+              )}
+            </Panel>
+          )}
           <Panel>
             <h2 className="text-xl">Evidence</h2>
             <p className="mt-1 text-sm text-muted">
               Last checked {formatDate(entry.lastChecked)}.{!entry.requirementsVerified && " Requirements come from public sources and haven't been confirmed with the provider."}
             </p>
-            <ul className="mt-3 space-y-1.5 text-sm">
+            {entry.linkEvidence && (
+              <p className="mt-2 text-sm"><Badge tone={link.tone}>{link.text}</Badge> <span className="text-muted">{entry.linkEvidence.note}</span></p>
+            )}
+            <p className="mt-3 text-sm">
+              <a href={entry.applicationUrl} target="_blank" rel="noopener noreferrer" className="break-all font-semibold text-ocean underline">Official page: {new URL(entry.applicationUrl).hostname.replace(/^www\./, "")}</a>
+            </p>
+            <p className="mt-3 text-sm font-semibold">Sources</p>
+            <ul className="mt-1 space-y-1.5 text-sm">
               {entry.sources.map((s) => (
                 <li key={s}><a href={s} target="_blank" rel="noreferrer" className="break-all text-ocean underline">{new URL(s).hostname.replace(/^www\./, "")}{new URL(s).pathname}</a></li>
               ))}

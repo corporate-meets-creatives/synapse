@@ -1,11 +1,22 @@
 import type { Application } from "../../shared/schemas";
 import type { MatchEntry } from "./api";
 
-export const fitLabel: Record<MatchEntry["readiness"], { text: string; tone: "lagoon" | "jelly" | "coral" }> = {
-  ready: { text: "Potential fit", tone: "lagoon" },
-  missing_items: { text: "Needs verification", tone: "jelly" },
-  not_a_fit: { text: "Does not meet a requirement", tone: "coral" },
-};
+// The three wordings the product uses. None of them says the business is eligible: only the provider decides.
+export const FIT_TEXTS = ["Potential fit", "More information needed", "Known requirement not met"] as const;
+export type FitText = (typeof FIT_TEXTS)[number];
+const FIT_TONE: Record<FitText, "lagoon" | "jelly" | "coral"> = { "Potential fit": "lagoon", "More information needed": "jelly", "Known requirement not met": "coral" };
+const FROM_READINESS: Record<MatchEntry["readiness"], FitText> = { ready: "Potential fit", missing_items: "More information needed", not_a_fit: "Known requirement not met" };
+
+export function fitOf(m: MatchEntry): { text: FitText; tone: "lagoon" | "jelly" | "coral" } {
+  const text = m.fitLabel ?? FROM_READINESS[m.readiness]; // older API responses only have readiness
+  return { text, tone: FIT_TONE[text] };
+}
+
+// How much we trust the link to a provider's application.
+export function linkStatus(m: MatchEntry): { text: string; tone: "lagoon" | "jelly" } {
+  if (m.linkEvidence?.status === "unverified" || (!m.linkEvidence && !m.applicationUrlVerified)) return { text: "Link not yet verified", tone: "jelly" };
+  return { text: m.linkEvidence?.status === "reachable" ? "Link checked" : "Link provided by our team", tone: "lagoon" };
+}
 
 // Backend statuses shown with the dashboard's wording.
 export function statusLabel(a: Application): { text: string; tone: "lagoon" | "jelly" | "coral" | "ocean"; next: string } {
