@@ -1,17 +1,10 @@
+import { confirmedValue as readConfirmed, isStudioFieldConfirmed } from "./confirm.js";
 import { DraftInputError, getForm } from "./form.js";
 import { draftNarratives, type CallNarrative, type Facts } from "./narrative.js";
 import type { AnswerField, DraftRequest, DraftResponse, FormDef, Question } from "./types.js";
 
-const read = (root: Record<string, unknown>, path: string): unknown => path.split(".").reduce<unknown>((o, k) => (o && typeof o === "object" ? (o as Record<string, unknown>)[k] : undefined), root);
-
 const blank = (v: unknown) => v === undefined || v === null || (typeof v === "string" && v.trim() === "") || (Array.isArray(v) && v.length === 0);
 const toText = (v: unknown): string => (typeof v === "boolean" ? (v ? "Yes" : "No") : Array.isArray(v) ? v.join(", ") : String(v));
-
-/** Profile fields derived in code from a confirmed field (e.g. first/last name from contactName). */
-const DERIVED: Record<string, { from: string; value: (src: string) => string }> = {
-  "studio.contactFirstName": { from: "contactName", value: (s) => s.trim().split(/\s+/)[0] ?? "" },
-  "studio.contactLastName": { from: "contactName", value: (s) => s.trim().split(/\s+/).slice(1).join(" ") },
-};
 
 /**
  * Google Forms prefill link. The owner opens it, reviews, and submits on Google's page.
@@ -43,19 +36,9 @@ export async function buildDraft(req: DraftRequest, call?: CallNarrative): Promi
   const instructor = usesInstructor ? req.instructor : undefined; // studio-level forms never see instructor data
 
   // Facts available to prefill: only what the owner confirmed.
-  const studioFieldMeta = (req.studio.fieldMeta ?? {}) as Record<string, { provenance?: string }>;
-  const studioConfirmed = (field: string) => req.studioConfirmed === true || ["owner_confirmed", "owner_edited"].includes(studioFieldMeta[field]?.provenance ?? "");
-  const facts = { studio: req.studio as Record<string, unknown>, instructor: (instructor ?? {}) as Record<string, unknown> };
-  const confirmedValue = (path: string): unknown => {
-    const [scope, ...rest] = path.split(".");
-    if (scope === "instructor") return instructor?.confirmed === true ? read(facts, path) : undefined;
-    const derived = DERIVED[path];
-    if (derived) {
-      const src = studioConfirmed(derived.from) ? read(facts, `studio.${derived.from}`) : undefined;
-      return typeof src === "string" && src.trim() ? derived.value(src) : undefined;
-    }
-    return studioConfirmed(rest[0]) ? read(facts, path) : undefined;
-  };
+  const profile = { studio: req.studio as Record<string, unknown>, instructor: (instructor ?? {}) as Record<string, unknown>, studioConfirmed: req.studioConfirmed };
+  const studioConfirmed = (field: string) => isStudioFieldConfirmed(profile, field);
+  const confirmedValue = (path: string): unknown => readConfirmed(profile, path);
 
   const existing = new Map(req.existingAnswers.map((a) => [a.questionId, a]));
   const regen = new Set(req.regenerateQuestionIds);

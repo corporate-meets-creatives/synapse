@@ -34,7 +34,15 @@
           "source": {
             "url": "https://www.silversneakers.com/partners/instructors/",
             "passage": "Instructors must be at least 18 (per public summary; unverified)."
-          }
+          },
+          "asks": [
+            {
+              "field": "instructor.requirementAnswers.adultAttested",
+              "question": "Is this instructor at least 18 years old?",
+              "type": "yes_no",
+              "why": "Instructors must be adults to apply. We only ask yes or no, never a birth date."
+            }
+          ]
         },
         {
           "id": "flex.cpr_certified",
@@ -52,7 +60,15 @@
           "source": {
             "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/",
             "passage": "CPR certification is uploaded under Credentials (unverified)."
-          }
+          },
+          "asks": [
+            {
+              "field": "instructor.cprCertified",
+              "question": "Does this instructor hold a current CPR certification?",
+              "type": "yes_no",
+              "why": "CPR certification is among the listed requirements. You upload the certificate in the provider portal, not here."
+            }
+          ]
         },
         {
           "id": "flex.teaching_certification",
@@ -74,7 +90,15 @@
           "source": {
             "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/",
             "passage": "Teaching certifications are uploaded under Credentials (unverified)."
-          }
+          },
+          "asks": [
+            {
+              "field": "instructor.requirementAnswers.hasTeachingCertification",
+              "question": "Does this instructor hold a group fitness or teaching certification?",
+              "type": "yes_no",
+              "why": "A teaching certification is among the listed requirements. You upload it in the provider portal."
+            }
+          ]
         },
         {
           "id": "flex.signature_specialty_cert",
@@ -118,7 +142,15 @@
           "source": {
             "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/",
             "passage": "Policy details are entered when signing the FLEX contract (unverified)."
-          }
+          },
+          "asks": [
+            {
+              "field": "instructor.requirementAnswers.hasLiabilityInsurance",
+              "question": "Does this instructor carry professional liability insurance?",
+              "type": "yes_no",
+              "why": "Insurance policy details are entered when signing the provider contract, so we only need to know if it exists."
+            }
+          ]
         },
         {
           "id": "flex.foundations_training",
@@ -239,7 +271,15 @@
                 "op": "nonempty"
               }
             ]
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.name",
+              "question": "What is your business name?",
+              "type": "text",
+              "why": "ClassPass asks which business is applying."
+            }
+          ]
         },
         {
           "id": "classpass.location",
@@ -257,7 +297,21 @@
                 "op": "nonempty"
               }
             ]
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.city",
+              "question": "Which city is your studio in?",
+              "type": "text",
+              "why": "ClassPass asks where you are located."
+            },
+            {
+              "field": "studio.state",
+              "question": "Which state is your studio in?",
+              "type": "text",
+              "why": "ClassPass asks where you are located."
+            }
+          ]
         },
         {
           "id": "classpass.class_details",
@@ -275,7 +329,15 @@
                 "op": "nonempty"
               }
             ]
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.classTypes",
+              "question": "Which class types do you offer? (comma-separated)",
+              "type": "list",
+              "why": "ClassPass asks for basic details about your classes."
+            }
+          ]
         }
       ],
       "linkEvidence": {
@@ -311,7 +373,15 @@
                 "op": "nonempty"
               }
             ]
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.name",
+              "question": "What is your business name?",
+              "type": "text",
+              "why": "Wellhub asks which business is applying."
+            }
+          ]
         },
         {
           "id": "wellhub.address",
@@ -325,7 +395,15 @@
                 "op": "nonempty"
               }
             ]
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.address",
+              "question": "What is your exact street address, including any suite or unit?",
+              "type": "text",
+              "why": "Wellhub uses the exact address for member check-ins."
+            }
+          ]
         },
         {
           "id": "wellhub.phone",
@@ -339,7 +417,15 @@
                 "op": "nonempty"
               }
             ]
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.phone",
+              "question": "What is your business phone number?",
+              "type": "text",
+              "why": "Wellhub asks for a business contact number."
+            }
+          ]
         },
         {
           "id": "wellhub.google_profile",
@@ -356,7 +442,15 @@
           },
           "source": {
             "url": "https://support.gympass.com/hc/en-us/articles/17125928446099"
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.googleBusinessProfileVerified",
+              "question": "Do you have a verified Google Business Profile for this location?",
+              "type": "yes_no",
+              "why": "Wellhub's guide says a verified Google Business Profile is needed to confirm your address."
+            }
+          ]
         },
         {
           "id": "wellhub.price_list",
@@ -373,7 +467,15 @@
           },
           "source": {
             "url": "https://support.gympass.com/hc/en-us/articles/17125928446099"
-          }
+          },
+          "asks": [
+            {
+              "field": "studio.hasPriceList",
+              "question": "Do you have a clear, published price list?",
+              "type": "yes_no",
+              "why": "Wellhub's guide asks for a clear price list."
+            }
+          ]
         }
       ],
       "linkEvidence": {
