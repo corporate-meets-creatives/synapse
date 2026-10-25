@@ -1,0 +1,190 @@
+{
+  "_note": "DEMO FIXTURE, NOT the real SilverSneakers FLEX application. The verified questions and portal walkthrough are a pending dependency from the strategists. Replace `questions`, set isDemo=false and fill `verifiedSource` when received. Question ids are stable keys; do not renumber.",
+  "providerId": "silversneakers",
+  "version": "demo-0",
+  "isDemo": true,
+  "notice": "Demo form: these questions are placeholders, not the real FLEX application. Do not rely on them for submission.",
+  "portalUrl": "https://instructor.tivityhealth.com/",
+  "portalUrlVerified": false,
+  "verifiedSource": null,
+  "capturedAt": "2026-10-25",
+  "questions": [
+    {
+      "id": "demo.studio_name",
+      "label": "Studio / business name",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.name",
+      "validation": {
+        "maxLength": 200
+      }
+    },
+    {
+      "id": "demo.studio_address",
+      "label": "Studio street address",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.address",
+      "validation": {
+        "maxLength": 300
+      }
+    },
+    {
+      "id": "demo.studio_city",
+      "label": "City",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.city",
+      "validation": {
+        "maxLength": 100
+      }
+    },
+    {
+      "id": "demo.studio_state",
+      "label": "State",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.state",
+      "validation": {
+        "maxLength": 50
+      }
+    },
+    {
+      "id": "demo.studio_phone",
+      "label": "Business phone",
+      "type": "phone",
+      "required": true,
+      "profileField": "studio.phone",
+      "validation": {
+        "maxLength": 50
+      }
+    },
+    {
+      "id": "demo.studio_email",
+      "label": "Business email",
+      "type": "email",
+      "required": true,
+      "profileField": "studio.email",
+      "validation": {
+        "maxLength": 320
+      }
+    },
+    {
+      "id": "demo.studio_website",
+      "label": "Website",
+      "type": "url",
+      "required": false,
+      "profileField": "studio.website",
+      "validation": {
+        "maxLength": 2048
+      }
+    },
+    {
+      "id": "demo.instructor_name",
+      "label": "Instructor full name",
+      "type": "short_text",
+      "required": true,
+      "profileField": "instructor.name",
+      "validation": {
+        "maxLength": 200
+      }
+    },
+    {
+      "id": "demo.instructor_adult",
+      "label": "Is the instructor at least 18 years old?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true,
+      "profileField": "instructor.requirementAnswers.adultAttested",
+      "helpText": "Attestation only; we do not collect birth dates."
+    },
+    {
+      "id": "demo.instructor_cpr",
+      "label": "Does the instructor hold a current CPR certification?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true,
+      "profileField": "instructor.cprCertified",
+      "helpText": "You upload the certificate in the provider portal."
+    },
+    {
+      "id": "demo.instructor_certifications",
+      "label": "Teaching / group fitness certifications",
+      "type": "long_text",
+      "required": true,
+      "profileField": "instructor.certifications",
+      "validation": {
+        "maxLength": 1000
+      }
+    },
+    {
+      "id": "demo.liability_insurance",
+      "label": "Does the instructor carry professional liability insurance?",
+      "type": "single_choice",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true,
+      "profileField": "instructor.requirementAnswers.hasLiabilityInsurance",
+      "helpText": "Policy details are entered in the provider portal."
+    },
+    {
+      "id": "demo.class_formats",
+      "label": "Class formats the instructor would teach",
+      "type": "long_text",
+      "required": true,
+      "profileField": "studio.classTypes",
+      "validation": {
+        "maxLength": 1000
+      }
+    },
+    {
+      "id": "demo.class_description",
+      "label": "Briefly describe the classes you would offer to older adults",
+      "type": "long_text",
+      "required": false,
+      "draftable": true,
+      "helpText": "AI draft from your confirmed profile. Review and edit before use.",
+      "validation": {
+        "maxLength": 1500
+      }
+    },
+    {
+      "id": "demo.tax_id",
+      "label": "Tax ID / W-9",
+      "type": "short_text",
+      "required": false,
+      "sensitive": true,
+      "helpText": "Never entered here. Complete directly in the provider portal."
+    },
+    {
+      "id": "demo.bank_details",
+      "label": "Direct deposit / bank details",
+      "type": "short_text",
+      "required": false,
+      "sensitive": true,
+      "helpText": "Never entered here. Complete directly in the provider portal."
+    },
+    {
+      "id": "demo.declaration",
+      "label": "I certify the information provided is accurate and accept the program terms",
+      "type": "single_choice",
+      "options": [
+        "Yes"
+      ],
+      "required": true,
+      "declaration": true,
+      "helpText": "Only the owner or instructor can complete this, in the provider portal."
+    }
+  ],
+  "applicantType": "instructor",
+  "title": "SilverSneakers FLEX (demo fixture)",
+  "submissionMethod": "copy_assist"
+}
