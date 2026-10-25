@@ -1,0 +1,108 @@
+{
+  "_note": "Extracted read-only from the PUBLIC Google Form on 2026-10-25 (viewform, no login). Question labels/types/options/entry ids are exact. NOT yet confirmed by the strategists. Only the 'partnership' path applies to a studio; referral/product-request/feedback sections are excluded. Prefill link: <formUrl>?usp=pp_url&entry.<id>=<urlencoded value>.",
+  "providerId": "forma",
+  "version": "google-form-2026-10-25",
+  "isDemo": false,
+  "submissionMethod": "google_form_prefill",
+  "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZ2MIqhMc6kgnPQw0Hio3uMyuK6lLHqPIWTlT9hSf1zC4xtQ/viewform",
+  "portalUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZ2MIqhMc6kgnPQw0Hio3uMyuK6lLHqPIWTlT9hSf1zC4xtQ/viewform",
+  "portalUrlVerified": false,
+  "verifiedSource": {
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLSfZ2MIqhMc6kgnPQw0Hio3uMyuK6lLHqPIWTlT9hSf1zC4xtQ/viewform",
+    "verifiedBy": "read from public form HTML (not strategist-confirmed)",
+    "verifiedAt": "2026-10-25"
+  },
+  "capturedAt": "2026-10-25",
+  "questions": [
+    {
+      "id": "forma.my_name",
+      "label": "My Name",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.contactName",
+      "googleEntryId": "entry.26432514"
+    },
+    {
+      "id": "forma.my_email",
+      "label": "My Email",
+      "type": "email",
+      "required": true,
+      "profileField": "studio.email",
+      "googleEntryId": "entry.1401174214"
+    },
+    {
+      "id": "forma.intent",
+      "label": "I'm here to...",
+      "type": "single_choice",
+      "required": true,
+      "googleEntryId": "entry.1364368139",
+      "options": [
+        "I'm interested in the partnership opportunity with Forma.",
+        "I would like to refer a vendor.",
+        "I would like to request a brand/product.",
+        "I have a feedback."
+      ],
+      "helpText": "Owner choice. A studio applying would choose the partnership option; we only suggest it."
+    },
+    {
+      "id": "forma.company_name",
+      "label": "Company Name",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.name",
+      "googleEntryId": "entry.884396131"
+    },
+    {
+      "id": "forma.company_website",
+      "label": "Company Website",
+      "type": "url",
+      "required": true,
+      "profileField": "studio.website",
+      "googleEntryId": "entry.70062611"
+    },
+    {
+      "id": "forma.partner_contact_name",
+      "label": "Contact Name",
+      "type": "short_text",
+      "required": true,
+      "profileField": "studio.contactName",
+      "googleEntryId": "entry.1027720269",
+      "section": "Partnership Contact Information"
+    },
+    {
+      "id": "forma.partner_contact_email",
+      "label": "Contact Email",
+      "type": "email",
+      "required": true,
+      "profileField": "studio.email",
+      "googleEntryId": "entry.1165442282",
+      "section": "Partnership Contact Information"
+    },
+    {
+      "id": "forma.location_availability",
+      "label": "Product Location Availability",
+      "type": "single_choice",
+      "required": true,
+      "options": [
+        "Worldwide",
+        "Other"
+      ],
+      "googleEntryId": "entry.1563896875",
+      "helpText": "Owner choice: where your classes/services are available. Not inferred."
+    },
+    {
+      "id": "forma.questions_for_team",
+      "label": "Questions or other information for Forma Partnership Team",
+      "type": "long_text",
+      "required": false,
+      "googleEntryId": "entry.958383559"
+    }
+  ],
+  "excludedSections": [
+    "Vendor Referral Information",
+    "Product/ Vendor Request",
+    "Feedback for Forma Store"
+  ],
+  "applicantType": "studio",
+  "title": "Forma vendor form"
+}

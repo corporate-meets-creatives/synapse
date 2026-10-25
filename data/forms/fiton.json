@@ -1,0 +1,210 @@
+{
+  "_note": "Read from the PUBLIC HubSpot embed definition that fitonhealth.com/facilities loads for every visitor (forms.hsforms.com/embed/v3/form/41617124/255d8274-e156-45a5-9a64-cf335f9c0ccd/json) on 2026-10-25. Labels, types, required flags and options are exact. Not strategist-confirmed. We never submit this form: the owner submits on FitOn's page. profileField values studio.contactFirstName/contactLastName are derived in code from studio.contactName.",
+  "providerId": "fiton",
+  "version": "hubspot-2026-10-25",
+  "isDemo": false,
+  "submissionMethod": "copy_assist",
+  "formUrl": "https://www.fitonhealth.com/facilities",
+  "portalUrl": "https://www.fitonhealth.com/facilities#get-started",
+  "portalUrlVerified": false,
+  "verifiedSource": {
+    "url": "https://www.fitonhealth.com/facilities",
+    "verifiedBy": "read from the public form definition (not strategist-confirmed)",
+    "verifiedAt": "2026-10-25"
+  },
+  "capturedAt": "2026-10-25",
+  "hubspot": {
+    "portalId": "41617124",
+    "formId": "255d8274-e156-45a5-9a64-cf335f9c0ccd",
+    "region": "na1"
+  },
+  "questions": [
+    {
+      "id": "fiton.firstname",
+      "label": "First Name",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "firstname",
+      "profileField": "studio.contactFirstName",
+      "helpText": "First name from the confirmed contact name (first word)."
+    },
+    {
+      "id": "fiton.lastname",
+      "label": "Last Name",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "lastname",
+      "profileField": "studio.contactLastName",
+      "helpText": "Last name from the confirmed contact name (remaining words)."
+    },
+    {
+      "id": "fiton.email",
+      "label": "Email",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "email",
+      "profileField": "studio.email"
+    },
+    {
+      "id": "fiton.mobilephone",
+      "label": "Mobile Phone Number",
+      "type": "phone",
+      "required": true,
+      "hubspotField": "mobilephone",
+      "profileField": "studio.phone",
+      "helpText": "Form asks for a MOBILE number; we only have the business phone. Owner should confirm."
+    },
+    {
+      "id": "fiton.company",
+      "label": "Fitness Location(s) Name",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "company",
+      "profileField": "studio.name"
+    },
+    {
+      "id": "fiton.fitness_facility_type",
+      "label": "Fitness Facility Type",
+      "type": "single_choice",
+      "required": true,
+      "hubspotField": "fitness_facility_type",
+      "options": [
+        "Big Box Gym / Commercial Fitness Center",
+        "Boutique Fitness Studio",
+        "Senior-Focused Facility",
+        "Medical Fitness / Wellness Center",
+        "Community Recreation Center",
+        "CrossFit / Functional Training",
+        "Martial Arts / Combat Sports",
+        "Yoga / Pilates",
+        "Group Training Facility",
+        "Other"
+      ],
+      "helpText": "Owner choice. Not inferred from the website."
+    },
+    {
+      "id": "fiton.website",
+      "label": "Website URL",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "website",
+      "profileField": "studio.website"
+    },
+    {
+      "id": "fiton.about_facility",
+      "label": "About Facility",
+      "type": "long_text",
+      "required": true,
+      "hubspotField": "about_facility",
+      "profileField": "studio.description",
+      "draftable": true,
+      "helpText": "Prefilled from the confirmed description; AI may draft if blank."
+    },
+    {
+      "id": "fiton.address",
+      "label": "Street Address",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "address",
+      "profileField": "studio.address"
+    },
+    {
+      "id": "fiton.city",
+      "label": "City",
+      "type": "short_text",
+      "required": true,
+      "hubspotField": "city",
+      "profileField": "studio.city"
+    },
+    {
+      "id": "fiton.state",
+      "label": "State/Region",
+      "type": "single_choice",
+      "required": true,
+      "hubspotField": "state",
+      "options": [
+        "International Location",
+        "AK",
+        "AL",
+        "AR",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "GA",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MI",
+        "MN",
+        "MO",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "Washington, D.C.",
+        "WI",
+        "WV",
+        "WY"
+      ],
+      "profileField": "studio.state"
+    },
+    {
+      "id": "fiton.facility_scheduling_service",
+      "label": "Facility Scheduling Service",
+      "type": "short_text",
+      "required": false,
+      "hubspotField": "facility_scheduling_service",
+      "profileField": "studio.schedulingPlatform"
+    },
+    {
+      "id": "fiton.membership_retail_rate",
+      "label": "Monthly Membership Retail Rate",
+      "type": "number",
+      "required": true,
+      "hubspotField": "membership_retail_rate",
+      "helpText": "Owner enters their price. Never inferred."
+    },
+    {
+      "id": "fiton.membership_access_includes",
+      "label": "Membership Access Includes",
+      "type": "long_text",
+      "required": true,
+      "hubspotField": "membership_access_includes",
+      "helpText": "Owner describes what a membership includes. Never inferred."
+    }
+  ],
+  "applicantType": "studio",
+  "title": "FitOn Health fitness facility partner form"
+}
