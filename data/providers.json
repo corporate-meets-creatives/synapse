@@ -23,16 +23,36 @@
           "missingLabel": "Adult (18+) attestation",
           "stage": "application",
           "hardBlocker": true,
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.adultAttested", "op": "is_true" }] },
-          "source": { "url": "https://www.silversneakers.com/partners/instructors/", "passage": "Instructors must be at least 18 (per public summary; unverified)." }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.adultAttested",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://www.silversneakers.com/partners/instructors/",
+            "passage": "Instructors must be at least 18 (per public summary; unverified)."
+          }
         },
         {
           "id": "flex.cpr_certified",
           "label": "Current CPR certification (with in-person practical)",
           "missingLabel": "CPR certification",
           "stage": "application",
-          "rule": { "all": [{ "field": "instructor.cprCertified", "op": "is_true" }] },
-          "source": { "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/", "passage": "CPR certification is uploaded under Credentials (unverified)." }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.cprCertified",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/",
+            "passage": "CPR certification is uploaded under Credentials (unverified)."
+          }
         },
         {
           "id": "flex.teaching_certification",
@@ -41,20 +61,42 @@
           "stage": "application",
           "rule": {
             "any": [
-              { "field": "instructor.certifications", "op": "nonempty" },
-              { "field": "instructor.requirementAnswers.hasTeachingCertification", "op": "is_true" }
+              {
+                "field": "instructor.certifications",
+                "op": "nonempty"
+              },
+              {
+                "field": "instructor.requirementAnswers.hasTeachingCertification",
+                "op": "is_true"
+              }
             ]
           },
-          "source": { "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/", "passage": "Teaching certifications are uploaded under Credentials (unverified)." }
+          "source": {
+            "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/",
+            "passage": "Teaching certifications are uploaded under Credentials (unverified)."
+          }
         },
         {
           "id": "flex.signature_specialty_cert",
           "label": "Specialty certification for the signature class format taught",
           "missingLabel": "Specialty certification for signature classes",
           "stage": "application",
-          "appliesWhen": { "field": "instructor.requirementAnswers.teachesSignatureClasses", "op": "is_true" },
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.hasSpecialtyCertification", "op": "is_true" }] },
-          "source": { "url": "https://www.silversneakers.com/partners/instructors/", "passage": "Some formats (e.g. Zumba Gold) need a specialty certification (unverified)." }
+          "appliesWhen": {
+            "field": "instructor.requirementAnswers.teachesSignatureClasses",
+            "op": "is_true"
+          },
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.hasSpecialtyCertification",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://www.silversneakers.com/partners/instructors/",
+            "passage": "Some formats (e.g. Zumba Gold) need a specialty certification (unverified)."
+          }
         },
         {
           "id": "flex.liability_insurance",
@@ -63,53 +105,112 @@
           "stage": "application",
           "rule": {
             "any": [
-              { "field": "instructor.requirementAnswers.hasLiabilityInsurance", "op": "is_true" },
-              { "field": "studio.hasLiabilityInsurance", "op": "is_true" }
+              {
+                "field": "instructor.requirementAnswers.hasLiabilityInsurance",
+                "op": "is_true"
+              },
+              {
+                "field": "studio.hasLiabilityInsurance",
+                "op": "is_true"
+              }
             ]
           },
-          "source": { "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/", "passage": "Policy details are entered when signing the FLEX contract (unverified)." }
+          "source": {
+            "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/",
+            "passage": "Policy details are entered when signing the FLEX contract (unverified)."
+          }
         },
         {
           "id": "flex.foundations_training",
           "label": "SilverSneakers Foundations training completed",
           "missingLabel": "Foundations training",
           "stage": "onboarding",
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.foundationsTrainingDone", "op": "is_true" }] },
-          "source": { "url": "https://instructor.tivityhealth.com/Home/InstructorRequirements" }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.foundationsTrainingDone",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://instructor.tivityhealth.com/Home/InstructorRequirements"
+          }
         },
         {
           "id": "flex.fwa_training",
           "label": "Fraud, Waste and Abuse training completed",
           "missingLabel": "Fraud, Waste and Abuse training",
           "stage": "onboarding",
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.fwaTrainingDone", "op": "is_true" }] },
-          "source": { "url": "https://instructor.tivityhealth.com/Home/InstructorRequirements" }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.fwaTrainingDone",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://instructor.tivityhealth.com/Home/InstructorRequirements"
+          }
         },
         {
           "id": "flex.contract_approved",
           "label": "FLEX contract approved",
           "missingLabel": "Approved FLEX contract",
           "stage": "onboarding",
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.flexContractApproved", "op": "is_true" }] },
-          "source": { "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/" }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.flexContractApproved",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/"
+          }
         },
         {
           "id": "flex.w9_direct_deposit",
           "label": "W-9 and direct deposit forms sent to the provider (never collected by this app)",
           "missingLabel": "W-9 and direct deposit (send on the provider's portal)",
           "stage": "onboarding",
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.w9DirectDepositSent", "op": "is_true" }] },
-          "source": { "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/" }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.w9DirectDepositSent",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://agelessgrace.com/silversneakers-flex-steps-to-teaching/"
+          }
         },
         {
           "id": "flex.background_check",
           "label": "Background check completed (if required)",
           "missingLabel": "Background check",
           "stage": "onboarding",
-          "rule": { "all": [{ "field": "instructor.requirementAnswers.backgroundCheckDone", "op": "is_true" }] },
-          "source": { "url": "https://instructor.tivityhealth.com/" }
+          "rule": {
+            "all": [
+              {
+                "field": "instructor.requirementAnswers.backgroundCheckDone",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://instructor.tivityhealth.com/"
+          }
         }
-      ]
+      ],
+      "linkEvidence": {
+        "status": "unverified",
+        "note": "Best-known public pages (instructor portal, instructors page). The team's SilverSneakers link (/partners/fitness-locations/) is the facility program page and blocks automated reads. Needs strategist confirmation of the FLEX application entry point.",
+        "checkedAt": "2026-10-25"
+      }
     },
     {
       "id": "classpass",
@@ -117,16 +218,71 @@
       "summary": "Class marketplace that studios can join. Apply on their site; we can't confirm acceptance or availability.",
       "applicantType": "studio",
       "workflowMode": "external_link",
-      "applicationUrl": "https://classpass.com/partners/studio-fitness",
-      "applicationUrlVerified": false,
-      "sourceUrls": ["https://classpass.com/afterclass/get-business-started-on-classpass/", "https://classpass.com/partners/studio-fitness"],
+      "applicationUrl": "https://classpass.com/partners/blog/get-business-started-on-classpass/",
+      "applicationUrlVerified": true,
+      "sourceUrls": [
+        "https://classpass.com/partners/blog/get-business-started-on-classpass/",
+        "https://classpass.com/partners/studio-fitness"
+      ],
       "lastChecked": "2026-10-25",
       "requirementsVerified": false,
       "requirements": [
-        { "id": "classpass.business_name", "label": "Business name", "missingLabel": "Business name", "stage": "application", "rule": { "all": [{ "field": "studio.name", "op": "nonempty" }] } },
-        { "id": "classpass.location", "label": "Studio location (city and state)", "missingLabel": "City and state", "stage": "application", "rule": { "all": [{ "field": "studio.city", "op": "nonempty" }, { "field": "studio.state", "op": "nonempty" }] } },
-        { "id": "classpass.class_details", "label": "Basic details about your classes", "missingLabel": "Class types", "stage": "application", "rule": { "any": [{ "field": "studio.classTypes", "op": "nonempty" }, { "field": "studio.danceStyles", "op": "nonempty" }] } }
-      ]
+        {
+          "id": "classpass.business_name",
+          "label": "Business name",
+          "missingLabel": "Business name",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.name",
+                "op": "nonempty"
+              }
+            ]
+          }
+        },
+        {
+          "id": "classpass.location",
+          "label": "Studio location (city and state)",
+          "missingLabel": "City and state",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.city",
+                "op": "nonempty"
+              },
+              {
+                "field": "studio.state",
+                "op": "nonempty"
+              }
+            ]
+          }
+        },
+        {
+          "id": "classpass.class_details",
+          "label": "Basic details about your classes",
+          "missingLabel": "Class types",
+          "stage": "application",
+          "rule": {
+            "any": [
+              {
+                "field": "studio.classTypes",
+                "op": "nonempty"
+              },
+              {
+                "field": "studio.danceStyles",
+                "op": "nonempty"
+              }
+            ]
+          }
+        }
+      ],
+      "linkEvidence": {
+        "status": "team_provided",
+        "note": "Link supplied in the strategists' form list. The page blocks automated checks, so reachability was not machine-verified.",
+        "checkedAt": "2026-10-25"
+      }
     },
     {
       "id": "wellhub",
@@ -134,18 +290,97 @@
       "summary": "Corporate wellness network that pays partner studios per check-in. Apply on their site; we can't confirm acceptance or availability.",
       "applicantType": "studio",
       "workflowMode": "external_link",
-      "applicationUrl": "https://wellhub.com/en-us/",
-      "applicationUrlVerified": false,
-      "sourceUrls": ["https://support.gympass.com/hc/en-us/articles/17125928446099"],
+      "applicationUrl": "https://signup.partners.wellhub.com/",
+      "applicationUrlVerified": true,
+      "sourceUrls": [
+        "https://signup.partners.wellhub.com/",
+        "https://support.gympass.com/hc/en-us/articles/17125928446099"
+      ],
       "lastChecked": "2026-10-25",
       "requirementsVerified": false,
       "requirements": [
-        { "id": "wellhub.business_name", "label": "Business name", "missingLabel": "Business name", "stage": "application", "rule": { "all": [{ "field": "studio.name", "op": "nonempty" }] } },
-        { "id": "wellhub.address", "label": "Exact street address (including suite or unit)", "missingLabel": "Street address", "stage": "application", "rule": { "all": [{ "field": "studio.address", "op": "nonempty" }] } },
-        { "id": "wellhub.phone", "label": "Business phone number", "missingLabel": "Business phone number", "stage": "application", "rule": { "all": [{ "field": "studio.phone", "op": "nonempty" }] } },
-        { "id": "wellhub.google_profile", "label": "Verified Google Business Profile", "missingLabel": "Verified Google Business Profile", "stage": "application", "rule": { "all": [{ "field": "studio.googleBusinessProfileVerified", "op": "is_true" }] }, "source": { "url": "https://support.gympass.com/hc/en-us/articles/17125928446099" } },
-        { "id": "wellhub.price_list", "label": "Clear price list", "missingLabel": "Price list", "stage": "application", "rule": { "all": [{ "field": "studio.hasPriceList", "op": "is_true" }] }, "source": { "url": "https://support.gympass.com/hc/en-us/articles/17125928446099" } }
-      ]
+        {
+          "id": "wellhub.business_name",
+          "label": "Business name",
+          "missingLabel": "Business name",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.name",
+                "op": "nonempty"
+              }
+            ]
+          }
+        },
+        {
+          "id": "wellhub.address",
+          "label": "Exact street address (including suite or unit)",
+          "missingLabel": "Street address",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.address",
+                "op": "nonempty"
+              }
+            ]
+          }
+        },
+        {
+          "id": "wellhub.phone",
+          "label": "Business phone number",
+          "missingLabel": "Business phone number",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.phone",
+                "op": "nonempty"
+              }
+            ]
+          }
+        },
+        {
+          "id": "wellhub.google_profile",
+          "label": "Verified Google Business Profile",
+          "missingLabel": "Verified Google Business Profile",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.googleBusinessProfileVerified",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://support.gympass.com/hc/en-us/articles/17125928446099"
+          }
+        },
+        {
+          "id": "wellhub.price_list",
+          "label": "Clear price list",
+          "missingLabel": "Price list",
+          "stage": "application",
+          "rule": {
+            "all": [
+              {
+                "field": "studio.hasPriceList",
+                "op": "is_true"
+              }
+            ]
+          },
+          "source": {
+            "url": "https://support.gympass.com/hc/en-us/articles/17125928446099"
+          }
+        }
+      ],
+      "linkEvidence": {
+        "status": "team_provided",
+        "note": "Sign-up link supplied in the strategists' form list; HTTP 200 on 2026-10-25 (page is a JavaScript app, so its fields were not read).",
+        "checkedAt": "2026-10-25"
+      }
     }
   ]
 }

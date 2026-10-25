@@ -19,8 +19,12 @@ test("catalog has the three providers; ClassPass/Wellhub are external links only
     const m = ms.find((x) => x.providerId === id)!;
     assert.equal(m.workflowMode, "external_link");
     assert.ok(m.externalUrl?.startsWith("https://"));
-    assert.equal(m.applicationUrlVerified, false);
+    assert.equal(m.linkEvidence.status, "team_provided");
+    assert.equal(m.applicationUrlVerified, true);
   }
+  // FLEX entry point is not confirmed yet, and the UI must be able to say so.
+  assert.equal(flex(ms, "a").applicationUrlVerified, false);
+  assert.equal(flex(ms, "a").linkEvidence.status, "unverified");
   assert.equal(flex(ms, "a").externalUrl, null);
 });
 
@@ -122,4 +126,69 @@ test("Claude failure or bad output falls back to deterministic text; external ov
 test("runMatch rejects malformed input", async () => {
   await assert.rejects(runMatch({ studio: "x" }));
   await assert.rejects(runMatch({ studio: {}, instructors: [{ name: "no id" }] }));
+});
+
+// ---------- story #17: labels, basis, instructor-specific asks, no eligibility claims ----------
+test("fit labels: Potential fit / More information needed / Known requirement not met", () => {
+  const ms = evaluateAll(req([complete, { id: "u", name: "U" }, { ...complete, id: "n", cprCertified: false }]));
+  assert.equal(flex(ms, "a").fitLabel, "Potential fit");
+  assert.equal(flex(ms, "u").fitLabel, "More information needed");
+  assert.equal(flex(ms, "n").fitLabel, "Known requirement not met"); // known failure, even though not a hard blocker
+  for (const m of ms) assert.equal(m.eligibilityConfirmed, false);
+  assert.match(flex(ms, "a").explanation, /^Potential fit/);
+});
+
+test("evidence basis: website-extracted facts are 'extracted', not confirmed; confirmation upgrades them", () => {
+  const meta = { name: { provenance: "ai_draft" }, city: { provenance: "ai_draft" }, state: { provenance: "ai_draft" }, classTypes: { provenance: "ai_draft" } };
+  const web = evaluateAll(MatchRequest.parse({ studio: { ...studio, fieldMeta: meta }, instructors: [] }));
+  const cp = web.find((m) => m.providerId === "classpass")!;
+  assert.equal(cp.fitLabel, "Potential fit");
+  assert.ok(cp.requirementResults.every((r) => r.result !== "met" || r.basis === "extracted"));
+  const confirmed = evaluateAll(MatchRequest.parse({ studioConfirmed: true, studio: { ...studio, fieldMeta: meta }, instructors: [] }));
+  assert.ok(confirmed.find((m) => m.providerId === "classpass")!.requirementResults.every((r) => r.result !== "met" || r.basis === "owner_confirmed"));
+  // instructor facts: reported until the owner confirms the instructor
+  const rep = flex(evaluateAll(req([complete])), "a");
+  assert.equal(result(rep, "flex.cpr_certified"), "met");
+  assert.equal(rep.requirementResults.find((r) => r.requirementId === "flex.cpr_certified")!.basis, "owner_reported");
+  const conf = flex(evaluateAll(req([{ ...complete, confirmed: true }])), "a");
+  assert.equal(conf.requirementResults.find((r) => r.requirementId === "flex.cpr_certified")!.basis, "owner_confirmed");
+});
+
+test("FLEX without an instructor asks for one; studio details alone never make it a Potential fit", () => {
+  const ms = evaluateAll(req([]));
+  const f = ms.find((m) => m.providerId === "silversneakers")!;
+  assert.equal(f.instructorRequired, true);
+  assert.equal(f.instructorId, null);
+  assert.equal(f.fitLabel, "More information needed");
+  assert.equal(f.missingToApply[0], "Select or add the instructor who would teach");
+  assert.equal(flex(evaluateAll(req([complete])), "a").instructorRequired, false);
+});
+
+test("FLEX asks instructor-specific questions with the field to answer", () => {
+  const m = flex(evaluateAll(req([{ id: "q", name: "Q", requirementAnswers: { adultAttested: true } }])), "q");
+  const keys = m.instructorQuestions.map((q) => q.answerKey).sort();
+  assert.deepEqual(keys, ["certifications", "cprCertified"].sort().concat(["requirementAnswers.hasLiabilityInsurance"]).sort());
+  assert.ok(m.instructorQuestions.every((q) => q.type === "yes_no" && q.label));
+  assert.equal(flex(evaluateAll(req([complete])), "a").instructorQuestions.length, 0);
+  // external providers never ask instructor questions
+  assert.deepEqual(evaluateAll(req([complete])).find((x) => x.providerId === "wellhub")!.instructorQuestions, []);
+});
+
+test("generated explanations can never claim eligibility, for any provider", async () => {
+  const base = evaluateAll(req([complete]));
+  const fx = flex(base, "a");
+  for (const bad of ["Great news: this instructor is eligible for FLEX.", "Approved! You can start teaching.", "This instructor qualifies."]) {
+    const out = await explain(base, async () => ({ explanations: [{ key: keyOf(fx), text: bad }] }));
+    assert.equal(flex(out, "a").explanationSource, "deterministic_fallback", bad);
+  }
+  const ok = await explain(base, async () => ({ explanations: [{ key: keyOf(fx), text: "Potential fit based on details you reported; the provider makes the final decision." }] }));
+  assert.equal(flex(ok, "a").explanationSource, "ai");
+});
+
+test("every match carries its source links, last-checked date and link evidence", () => {
+  for (const m of evaluateAll(req([complete]))) {
+    assert.ok(m.sources.length > 0 && m.sources.every((u) => u.startsWith("https://")), m.providerId);
+    assert.match(m.lastChecked, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(m.applicationUrl.startsWith("https://") && m.linkEvidence.note.length > 0);
+  }
 });

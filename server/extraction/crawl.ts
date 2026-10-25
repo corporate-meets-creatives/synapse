@@ -1,6 +1,7 @@
 import { ExtractError } from "./errors.js";
 import { extractLinks, parseHtml, type PageContent } from "./html.js";
 import { fetchPage, type FetchDeps } from "./safeFetch.js";
+import { isSocialUrl, looksBlocked } from "./social.js";
 
 export const LIMITS = { maxPages: 4, totalMs: 15_000, perPageMs: 6_000, maxBytes: 500_000 };
 
@@ -34,7 +35,17 @@ export async function crawlSite(startUrl: string, deps: FetchDeps = {}): Promise
   });
   const warnings: string[] = [];
 
-  const home = await fetchPage(startUrl, opts(), deps); // throws ExtractError on failure
+  const social = isSocialUrl(startUrl);
+  const blockedMsg = "That page needs a login or blocks automated access, so we can't read it. Paste the business text from the page, or enter details manually.";
+
+  let home;
+  try {
+    home = await fetchPage(startUrl, opts(), deps); // throws ExtractError on failure
+  } catch (e) {
+    // Never work around a social site's login or bot protection: hand over to paste/manual entry.
+    if (social && e instanceof ExtractError && e.code === "extraction_failed") throw new ExtractError("source_blocked", blockedMsg, 422);
+    throw e;
+  }
   const origin = new URL(home.url).origin;
 
   let robots = "";
@@ -44,10 +55,15 @@ export async function crawlSite(startUrl: string, deps: FetchDeps = {}): Promise
     /* no robots.txt: allowed */
   }
   if (!robotsAllows(robots, new URL(home.url).pathname || "/")) {
-    throw new ExtractError("extraction_failed", "That website asks not to be automatically read. Enter your details manually.", 422);
+    throw new ExtractError(social ? "source_blocked" : "extraction_failed", "That website asks not to be automatically read. Paste the business text instead, or enter details manually.", 422);
   }
 
   const pages: PageContent[] = [parseHtml(home.url, home.body)];
+  if (social) {
+    // A single public page only: no link crawling on social sites, and a login wall is a stop, not an obstacle to bypass.
+    if (looksBlocked(pages[0].text)) throw new ExtractError("source_blocked", blockedMsg, 422);
+    return { pages, warnings };
+  }
   const seen = new Set([home.url.replace(/\/$/, "")]);
 
   const candidates = extractLinks(home.url, home.body)

@@ -30,6 +30,7 @@ export const CatalogProvider = z.object({
   workflowMode: z.enum(["prepare_application", "external_link"]),
   applicationUrl: z.url(),
   applicationUrlVerified: z.boolean(),
+  linkEvidence: z.object({ status: z.enum(["team_provided", "reachable", "unverified"]), note: z.string(), checkedAt: z.string() }),
   sourceUrls: z.array(z.url()),
   lastChecked: z.string(),
   requirementsVerified: z.boolean(),
@@ -42,6 +43,7 @@ export const Catalog = z.object({ providers: z.array(CatalogProvider) });
 export const MatchInstructor = z.object({
   id: z.string().min(1).max(64),
   name: z.string().max(200).default(""),
+  confirmed: z.boolean().optional(), // owner confirmed this instructor's details
   cprCertified: z.boolean().optional(),
   certifications: z.array(z.string().max(200)).max(20).default([]),
   /** Owner-reported answers keyed by requirement input (adultAttested, hasLiabilityInsurance, ...). Missing = unknown. */
@@ -50,6 +52,7 @@ export const MatchInstructor = z.object({
 export type MatchInstructor = z.infer<typeof MatchInstructor>;
 
 export const MatchRequest = z.object({
+  studioConfirmed: z.boolean().optional(), // owner confirmed the whole studio profile
   studio: StudioProfileInput.partial().extend({
     classTypes: z.array(z.string()).optional(),
     googleBusinessProfileVerified: z.boolean().optional(),
@@ -61,14 +64,32 @@ export type MatchRequest = z.infer<typeof MatchRequest>;
 
 // ---------- response (superset of shared MatchResult) ----------
 export type Result = "met" | "not_met" | "unknown";
+/** Where a met requirement's evidence came from. "extracted" = read from a website/AI, not yet confirmed by the owner. */
+export type Basis = "extracted" | "owner_reported" | "owner_confirmed";
 export interface RequirementResult {
   requirementId: string;
   label: string;
   stage: "application" | "onboarding" | "teaching";
   result: Result;
+  basis?: Basis; // only for "met"
   source?: Source;
 }
+export type FitLabel = "Potential fit" | "More information needed" | "Known requirement not met";
+export interface InstructorQuestion {
+  requirementId: string;
+  label: string; // what we need to know
+  answerKey: string; // field on the instructor to fill, e.g. "cprCertified" or "requirementAnswers.adultAttested"
+  type: "yes_no";
+}
 export interface MatchEntry {
+  fitLabel: FitLabel;
+  /** Always false: only the provider decides eligibility; nothing here confirms it. */
+  eligibilityConfirmed: false;
+  /** FLEX is instructor-specific: true when no instructor was given, so studio details alone are not enough. */
+  instructorRequired: boolean;
+  /** What to ask the owner about this instructor (FLEX only). */
+  instructorQuestions: InstructorQuestion[];
+  linkEvidence: { status: "team_provided" | "reachable" | "unverified"; note: string; checkedAt: string };
   providerId: string;
   providerName: string;
   instructorId: string | null;
