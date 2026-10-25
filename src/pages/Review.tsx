@@ -3,7 +3,7 @@ import { Button, Loading, Notice, Panel, Steps } from "../components/ui";
 import { navigate } from "../lib/router";
 import { Link } from "../components/Link";
 import { api, ApiError } from "../lib/api";
-import { QUESTIONS, questionById } from "../lib/forms";
+import { useQuestions } from "../lib/useQuestions";
 import { providerById } from "../lib/catalog";
 import { APPLY_STEPS } from "../lib/steps";
 import { useApplication } from "../lib/useApplication";
@@ -12,10 +12,13 @@ import { NotFoundLink } from "./NotFound";
 
 export default function Review({ token, id }: { token: string; id: string }) {
   const { app, error } = useApplication(token, id);
+  const { questions, form, loading } = useQuestions(app);
   const [busy, setBusy] = useState(false);
   const [fail, setFail] = useState<string | null>(null);
   if (error) return <NotFoundLink />;
-  if (!app) return <Loading label="Loading your application" />;
+  if (!app || loading) return <Loading label="Loading your application" />;
+  const byId = new Map(questions.map((q) => [q.id, q]));
+  const ownerOnly = questions.filter((q) => q.ownerOnly);
 
   const provider = providerById(app.providerId);
   const missing = app.fields.filter((f) => f.needsInput);
@@ -45,7 +48,7 @@ export default function Review({ token, id }: { token: string; id: string }) {
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
         <Panel>
           <dl className="divide-y divide-mist">
-            {QUESTIONS.map((q) => {
+            {questions.filter((q) => !q.ownerOnly).map((q) => {
               const f = app.fields.find((x) => x.questionId === q.id);
               if (!f) return null;
               return (
@@ -68,13 +71,20 @@ export default function Review({ token, id }: { token: string; id: string }) {
               <div className="mt-3">
                 <Notice tone="coral" title={`${missing.length} answer${missing.length === 1 ? "" : "s"} still need your input`}>
                   <ul className="mt-1 list-disc pl-5">
-                    {missing.map((f) => <li key={f.questionId}><button className="underline" onClick={() => edit(f.questionId)}>{questionById(f.questionId)?.label}</button></li>)}
+                    {missing.map((f) => <li key={f.questionId}><button className="underline" onClick={() => edit(f.questionId)}>{byId.get(f.questionId)?.label ?? f.questionId}</button></li>)}
                   </ul>
                 </Notice>
               </div>
             ) : (
               <p className="mt-2 text-sm">Every answer is filled in. Attachments: none. Documents come later, during onboarding.</p>
             )}
+            {ownerOnly.length > 0 && (
+              <div className="mt-4">
+                <p className="text-sm font-semibold">You'll complete these on the vendor's portal yourself:</p>
+                <ul className="mt-1 list-disc pl-5 text-sm text-muted">{ownerOnly.map((q) => <li key={q.id}>{q.label}</li>)}</ul>
+              </div>
+            )}
+            {form?.isDemo && <p className="mt-3 text-sm font-medium text-[#5a3fc0]">Example form: these questions are placeholders, not the vendor's real application.</p>}
             <p className="mt-4 text-sm text-muted">
               {provider?.name ?? "The provider"} may ask you to accept terms or sign declarations on their website. We never accept those for you.
             </p>

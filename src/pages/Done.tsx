@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge, Button, Loading, Notice, Panel, Steps, TextField } from "../components/ui";
 import { navigate } from "../lib/router";
 import { api, ApiError } from "../lib/api";
-import { QUESTIONS } from "../lib/forms";
+import { useQuestions } from "../lib/useQuestions";
 import { formatDate, providerById } from "../lib/catalog";
 import { APPLY_STEPS } from "../lib/steps";
 import { useApplication } from "../lib/useApplication";
@@ -20,17 +20,19 @@ function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) 
 
 export default function Done({ token, id }: { token: string; id: string }) {
   const { app, setApp, error } = useApplication(token, id);
+  const { questions, form, loading } = useQuestions(app);
   const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [busy, setBusy] = useState(false);
   const [fail, setFail] = useState<string | null>(null);
   useEffect(() => { if (app?.status === "draft") navigate(`/s/${token}/apply/${id}/review`, true); }, [app, token, id]);
 
   if (error) return <NotFoundLink />;
-  if (!app || app.status === "draft") return <Loading label="Loading your application" />;
+  if (!app || app.status === "draft" || loading) return <Loading label="Loading your application" />;
 
   const provider = providerById(app.providerId);
   const submitted = app.status === "submitted_owner_reported";
-  const answers = QUESTIONS.map((q) => ({ q, f: app.fields.find((x) => x.questionId === q.id) })).filter((x) => x.f);
+  const answers = questions.filter((q) => !q.ownerOnly).map((q) => ({ q, f: app.fields.find((x) => x.questionId === q.id) })).filter((x) => x.f && x.f.answer.trim());
+  const portal = form?.portalUrl ?? provider?.applicationUrl;
   const all = answers.map(({ q, f }) => `${q.label}: ${f!.answer}`).join("\n\n");
 
   async function markSubmitted() {
@@ -86,11 +88,11 @@ export default function Done({ token, id }: { token: string; id: string }) {
           {!submitted && (
             <Panel>
               <h2 className="text-xl">Submit on their site</h2>
-              <a href={provider?.applicationUrl} target="_blank" rel="noreferrer"
+              <a href={portal ?? undefined} target="_blank" rel="noreferrer"
                 className="mt-4 flex w-full items-center justify-center rounded-full bg-ocean px-5 py-2.5 font-semibold text-white no-underline hover:bg-ocean-deep">
-                Continue to provider website
+                Open {provider?.name ?? "vendor"} portal
               </a>
-              <p className="mt-3 text-sm text-muted">Opens in a new tab. Come back here once you've sent it.</p>
+              <p className="mt-3 text-sm text-muted">Opens in a new tab. You submit the application there; Wellyfish doesn't submit it for you. Come back here once you've sent it.</p>
               <div className="mt-5 border-t border-mist pt-5">
                 <TextField id="sub-date" label="Date you submitted" type="date" value={date} max={new Date().toISOString().slice(0, 10)}
                   onChange={(e) => setDate(e.target.value)} />

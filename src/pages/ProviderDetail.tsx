@@ -8,6 +8,7 @@ import { fitOf, linkStatus } from "../lib/labels";
 import { formatDate, providerById } from "../lib/catalog";
 import { FORM_VERSION, prefill } from "../lib/forms";
 import { NotFoundLink } from "./NotFound";
+import { savedFormAnswers } from "../features/questions/store";
 
 const icon = { met: "✓", not_met: "✕", unknown: "?" } as const;
 const iconTone = { met: "bg-lagoon text-white", not_met: "bg-coral text-white", unknown: "bg-jelly-soft text-[#5a3fc0]" } as const;
@@ -66,8 +67,18 @@ export default function ProviderDetail({ token, providerId }: { token: string; p
     setBusy(true);
     setFail(null);
     try {
+      // Use the provider's real form when we have one: Claude drafts narrative answers, facts come from the
+      // confirmed profile and the follow-up questions, and unknown facts stay blank. Fall back to the basic form.
+      let formVersion = FORM_VERSION;
+      let fields = prefill(studio!);
+      try {
+        const known = savedFormAnswers.get(token, providerId).map((a) => ({ questionId: a.questionId, answer: a.answer, provenance: "owner_edited" as const, needsInput: false }));
+        const d = await api.draft(studio!, providerId, entry!.instructorId, known);
+        formVersion = d.formVersion;
+        fields = d.answers;
+      } catch { /* no form for this provider: keep the basic form */ }
       const { application } = await api.createApplication(token, {
-        providerId, instructorId: entry!.instructorId, formVersion: FORM_VERSION, fields: prefill(studio!),
+        providerId, instructorId: entry!.instructorId, formVersion, fields,
       });
       navigate(`/s/${token}/apply/${application.id}`);
     } catch (e) {

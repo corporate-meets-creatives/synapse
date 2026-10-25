@@ -82,6 +82,21 @@ export type QuestionsResponse = {
 };
 export type AnswerIn = { field: string; value: string | boolean | number | string[] | null };
 
+
+// ---- provider application forms + drafting (shape returned by /api/draft) ----
+export type FormQuestion = {
+  id: string; label: string; type: "short_text" | "long_text" | "email" | "phone" | "url" | "number" | "date" | "single_choice" | "multi_choice";
+  options?: string[]; required: boolean; helpText?: string; draftable?: boolean; sensitive?: boolean; declaration?: boolean; section?: string;
+};
+export type FormDef = {
+  providerId: string; title: string; version: string; isDemo: boolean; notice?: string; portalUrl: string | null;
+  applicantType: "studio" | "instructor"; questions: FormQuestion[];
+};
+export type DraftResponse = {
+  providerId: string; formVersion: string; isDemo: boolean; notice: string | null; portalUrl: string | null;
+  answers: ApplicationField[]; missingQuestionIds: string[]; aiDraftedQuestionIds: string[]; ownerOnlyQuestionIds: string[]; warnings: string[];
+};
+
 export const api = {
   extract: (input: { url: string } | { text: string }) =>
     call<ExtractResponse>("/api/extract", { method: "POST", body: JSON.stringify(input) }),
@@ -116,6 +131,18 @@ export const api = {
         })),
       }),
     }),
+
+  form: (providerId: string) => call<FormDef>(`/api/draft?providerId=${encodeURIComponent(providerId)}`),
+  draft: (studio: Studio, providerId: string, instructorId: string | null, existingAnswers: ApplicationField[] = [], regenerateQuestionIds: string[] = []) => {
+    const i = instructorId ? studio.instructors.find((x) => x.id === instructorId) : undefined;
+    return call<DraftResponse>("/api/draft", {
+      method: "POST",
+      body: JSON.stringify({
+        providerId, studio: studio.profile, studioConfirmed: true, existingAnswers, regenerateQuestionIds,
+        instructor: i ? { id: i.id, name: i.name, confirmed: true, cprCertified: i.cprCertified, certifications: i.certifications, requirementAnswers: i.requirementAnswers ?? {} } : undefined,
+      }),
+    });
+  },
 
   listApplications: (token: string) => call<{ applications: Application[] }>("/api/applications", { token }),
   getApplication: (token: string, id: string) =>
