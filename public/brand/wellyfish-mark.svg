@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wellyfish">
+  <defs>
+    <linearGradient id="bell" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2F5BEA"/><stop offset=".55" stop-color="#7B5CE6"/><stop offset="1" stop-color="#F2649B"/>
+    </linearGradient>
+  </defs>
+  <path d="M8 30C8 16 19 6 32 6s24 10 24 24c0 3-2 4-4 4H12c-2 0-4-1-4-4Z" fill="url(#bell)"/>
+  <ellipse cx="24" cy="18" rx="6" ry="3.5" fill="#fff" opacity=".35"/>
+  <g fill="none" stroke="#13A8A0" stroke-width="3.5" stroke-linecap="round">
+    <path d="M18 36c-3 6 3 9 0 16"/><path d="M28 36c-3 7 3 10 0 20"/>
+    <path d="M38 36c3 7-3 10 0 20"/><path d="M48 36c3 6-3 9 0 16"/>
+  </g>
+</svg>

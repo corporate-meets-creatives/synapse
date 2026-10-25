@@ -1,0 +1,57 @@
+/*
+ * Wellyfish design tokens, as plain CSS.
+ *
+ * Mirrors the @theme block in src/index.css (the source of truth for the app).
+ * Names match the Tailwind tokens, so --color-ocean here is bg-ocean / text-ocean there.
+ * If you change a value in src/index.css, change it here too.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Figtree:wght@400;500;600;700&display=swap");
+
+:root {
+  /* ---- Brand ---- */
+  --color-ocean: #2f5bea;      /* primary actions, links, current step */
+  --color-ocean-deep: #2349c4; /* primary hover */
+  --color-lagoon: #13a8a0;     /* confirmed, potential fit, done */
+  --color-jelly: #7b5ce6;      /* AI drafted, needs verification, working */
+  --color-coral: #f2649b;      /* needs your input, blockers */
+  --color-coral-deep: #b8296a; /* readable pink text, errors */
+
+  /* ---- Soft fills (badges, notices) ---- */
+  --color-ocean-soft: #e3ebfd;  /* hard-coded in ui.tsx today */
+  --color-lagoon-soft: #ddf5f3;
+  --color-jelly-soft: #ece7fd;
+  --color-coral-soft: #fde6ef;
+
+  /* ---- Text on soft fills ---- */
+  --color-lagoon-text: #0b6f6a; /* hard-coded in ui.tsx today */
+  --color-jelly-text: #5a3fc0;  /* hard-coded in ui.tsx today */
+
+  /* ---- Text & surfaces ---- */
+  --color-ink: #1b2559;     /* deep ocean: text */
+  --color-muted: #56638a;   /* secondary text */
+  --color-foam: #f2f7ff;    /* page background */
+  --color-mist: #dbe5f6;    /* borders */
+  --color-surface: #ffffff; /* panels, fields, header */
+
+  /* ---- Gradients ---- */
+  --gradient-bell: linear-gradient(135deg, #2f5bea 0%, #7b5ce6 55%, #f2649b 100%);
+  --gradient-halo: linear-gradient(135deg, #dbe7ff 0%, #ece7fd 50%, #fde6ef 100%);
+
+  /* ---- Type ---- */
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Figtree", system-ui, sans-serif;
+
+  /* ---- Shape ---- */
+  --radius-field: 0.75rem;  /* 12px: inputs, notices */
+  --radius-panel: 1.25rem;  /* 20px: panels, cards */
+  --radius-full: 9999px;    /* buttons, badges, nav pills */
+
+  /* ---- Focus ---- */
+  --focus-ring: 3px solid var(--color-ocean);
+  --focus-offset: 2px;
+
+  /* ---- Motion ---- */
+  --drift-duration: 6s;
+  --drift-distance: -10px;
+}
