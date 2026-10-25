@@ -33,7 +33,7 @@ export function parseHtml(url: string, html: string): PageContent {
       .replace(/<\/(p|div|li|h[1-6]|tr|br|section|header|footer)>|<br\s*\/?>/gi, "\n")
       .replace(/<[^>]+>/g, " "),
   )
-    .replace(/[ \t\f\v ]+/g, " ")
+    .replace(/[ \t\f\v\u00a0]+/g, " ")
     .replace(/\s*\n\s*/g, "\n")
     .trim()
     .slice(0, MAX_TEXT);

@@ -99,9 +99,11 @@ export default function ProviderDetail({ token, providerId }: { token: string; p
               <div><h3 className="mb-2 text-base">Blockers</h3><ReqList items={app.filter((r) => r.result === "not_met")} empty="No blockers found." /></div>
               <div><h3 className="mb-2 text-base">Unanswered</h3><ReqList items={app.filter((r) => r.result === "unknown")} empty="Nothing left to answer." /></div>
             </div>
-            {app.some((r) => r.result === "unknown") && (
+            {(app.some((r) => r.result === "unknown") || entry.instructorRequired) && (
               <p className="mt-4 text-sm text-muted">
-                Answer these in your <Link to={`/s/${token}/profile`} className="text-ocean underline">business profile</Link> to update the fit.
+                <Link to={`/s/${token}/providers/${providerId}/questions${instructorId ? `?i=${encodeURIComponent(instructorId)}` : ""}`} className="font-semibold text-ocean underline">
+                  Answer the few follow-up questions
+                </Link>{" "}to update the fit. You can also edit your <Link to={`/s/${token}/profile`} className="text-ocean underline">business profile</Link>.
               </p>
             )}
           </Panel>

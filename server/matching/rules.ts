@@ -9,7 +9,7 @@ export interface Facts {
 const RANK: Record<Basis, number> = { extracted: 0, owner_reported: 1, owner_confirmed: 2 };
 
 /** How trustworthy the evidence for one field is: website/AI extraction < owner-entered < owner-confirmed. */
-function basisOf(field: string, facts: Facts): Basis {
+export function basisOf(field: string, facts: Facts): Basis {
   const [scope, ...rest] = field.split(".");
   if (scope === "instructor") return facts.instructor.confirmed === true ? "owner_confirmed" : "owner_reported";
   if (facts.studioConfirmed === true) return "owner_confirmed";
@@ -50,7 +50,7 @@ export function evaluateRequirement(req: CatalogRequirement, facts: Facts): Requ
   // Conditional requirements are evaluated only once the condition is known to apply.
   if (req.appliesWhen && checkCondition(req.appliesWhen, facts) !== "met") return null;
   let result: Result;
-  let metFields: string[] = [];
+  let metFields: string[];
   if (req.rule.all) {
     const rs = req.rule.all.map((c) => checkCondition(c, facts));
     result = rs.includes("not_met") ? "not_met" : rs.includes("unknown") ? "unknown" : "met";

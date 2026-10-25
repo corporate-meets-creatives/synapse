@@ -9,6 +9,7 @@ import Need from "./pages/Need";
 import Results from "./pages/Results";
 import ProviderDetail from "./pages/ProviderDetail";
 import Prepare from "./pages/Prepare";
+import Questions from "./features/questions/Questions";
 import Review from "./pages/Review";
 import Done from "./pages/Done";
 import Applications from "./pages/Applications";
@@ -22,6 +23,7 @@ const routes: [string, (p: Record<string, string>) => ReactNode][] = [
   ["/s/:token/need", (p) => <Need token={p.token} />],
   ["/s/:token/results", (p) => <Results token={p.token} />],
   ["/s/:token/providers/:providerId", (p) => <ProviderDetail token={p.token} providerId={p.providerId} />],
+  ["/s/:token/providers/:providerId/questions", (p) => <Questions token={p.token} providerId={p.providerId} />],
   ["/s/:token/apply/:id", (p) => <Prepare token={p.token} id={p.id} />],
   ["/s/:token/apply/:id/review", (p) => <Review token={p.token} id={p.id} />],
   ["/s/:token/apply/:id/done", (p) => <Done token={p.token} id={p.id} />],

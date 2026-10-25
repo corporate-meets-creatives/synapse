@@ -8,6 +8,10 @@ export type Condition = z.infer<typeof Condition>;
 const Source = z.object({ url: z.url(), passage: z.string().optional() });
 export type Source = z.infer<typeof Source>;
 
+/** A question that resolves an unknown requirement. `field` is the profile path the answer is written to. */
+const Ask = z.object({ field: z.string(), question: z.string(), type: z.enum(["yes_no", "text", "list"]), why: z.string() });
+export type Ask = z.infer<typeof Ask>;
+
 const CatalogRequirement = z
   .object({
     id: z.string(), // stable
@@ -19,6 +23,7 @@ const CatalogRequirement = z
     // all: every condition must hold; any: at least one. Exactly one of the two is used.
     rule: z.object({ all: z.array(Condition).optional(), any: z.array(Condition).optional() }).refine((r) => Boolean(r.all?.length) !== Boolean(r.any?.length)),
     source: Source.optional(),
+    asks: z.array(Ask).default([]),
   });
 export type CatalogRequirement = z.infer<typeof CatalogRequirement>;
 

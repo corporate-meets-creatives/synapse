@@ -49,7 +49,32 @@ export type MatchEntry = {
   externalUrl: string | null; applicationUrl: string; applicationUrlVerified: boolean;
   requirementsVerified: boolean; lastChecked: string; explanation: string;
   explanationSource: "ai" | "deterministic_fallback";
+  instructorRequired?: boolean; // FLEX without a chosen instructor: studio details alone are not enough
 };
+
+// ---- follow-up questions (shape returned by /api/questions) ----
+export type FollowUpQuestion = {
+  id: string; field: string; label: string; type: "yes_no" | "text" | "list" | "choice" | "number";
+  options?: string[]; why: string; source: "requirement" | "form";
+};
+export type ConfirmedItem = {
+  id: string; field: string; label: string; value: unknown; basis: "extracted" | "owner_reported" | "owner_confirmed";
+  result?: "met" | "not_met" | "unknown"; editable: true; needsConfirmation?: boolean;
+};
+export type QuestionsInstructor = {
+  id: string; name: string; cprCertified?: boolean; certifications: string[]; requirementAnswers: Record<string, boolean | string | number | null>;
+};
+export type QuestionsResponse = {
+  providerId: string; providerName: string; form: { version: string; isDemo: boolean } | null;
+  instructorSelection: { required: boolean; selectedId: string | null; options: { id: string; name: string }[]; canAdd: boolean };
+  instructors: QuestionsInstructor[];
+  studio: StudioProfileInput;
+  questions: FollowUpQuestion[]; confirmed: ConfirmedItem[]; unknownFields: string[];
+  readiness: { fitLabel: "Potential fit" | "More information needed" | "Known requirement not met"; readiness: MatchEntry["readiness"]; missingToApply: string[]; blockers: string[]; eligibilityConfirmed: false } | null;
+  existingAnswers: { questionId: string; answer: string; provenance: "owner_edited"; needsInput: false }[];
+  done: boolean;
+};
+export type AnswerIn = { field: string; value: string | boolean | number | string[] | null };
 
 export const api = {
   extract: (url: string) =>
@@ -65,6 +90,19 @@ export const api = {
     call<{ matches: MatchEntry[] }>("/api/match", {
       method: "POST",
       body: JSON.stringify({
+        studio: studio.profile,
+        instructors: studio.instructors.map((i) => ({
+          id: i.id, name: i.name, cprCertified: i.cprCertified,
+          certifications: i.certifications, requirementAnswers: i.requirementAnswers ?? {},
+        })),
+      }),
+    }),
+
+  questions: (studio: Studio, body: { providerId: string; instructorId?: string; answers: AnswerIn[]; existingAnswers?: { questionId: string; answer: string }[] }) =>
+    call<QuestionsResponse>("/api/questions", {
+      method: "POST",
+      body: JSON.stringify({
+        ...body,
         studio: studio.profile,
         instructors: studio.instructors.map((i) => ({
           id: i.id, name: i.name, cprCertified: i.cprCertified,
