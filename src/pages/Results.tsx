@@ -6,7 +6,7 @@ import { Link } from "../components/Link";
 import { api, ApiError, type MatchEntry } from "../lib/api";
 import { useStudio, matchCache } from "../lib/session";
 import { savedNeed } from "../lib/local";
-import { fitLabel } from "../lib/labels";
+import { fitOf, FIT_TEXTS, linkStatus, type FitText } from "../lib/labels";
 import { formatDate, providerById } from "../lib/catalog";
 import { NotFoundLink } from "./NotFound";
 
@@ -20,7 +20,7 @@ export default function Results({ token }: { token: string }) {
   const [matches, setMatches] = useState<MatchEntry[] | null>(() => matchCache.get(token) ?? null);
   const [stage, setStage] = useState(0);
   const [fail, setFail] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"all" | MatchEntry["readiness"]>("all");
+  const [filter, setFilter] = useState<"all" | FitText>("all");
   const need = savedNeed.get(token);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Results({ token }: { token: string }) {
   if (!studio) return <Loading label="Loading your profile" />;
 
   const names = Object.fromEntries(studio.instructors.map((i) => [i.id, i.name]));
-  const shown = (matches ?? []).filter((m) => filter === "all" || m.readiness === filter);
+  const shown = (matches ?? []).filter((m) => filter === "all" || fitOf(m).text === filter);
 
   return (
     <>
@@ -59,10 +59,10 @@ export default function Results({ token }: { token: string }) {
       {matches && (
         <>
           <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filter by fit">
-            {(["all", "ready", "missing_items", "not_a_fit"] as const).map((f) => (
+            {(["all", ...FIT_TEXTS] as const).map((f) => (
               <button key={f} onClick={() => setFilter(f)} aria-pressed={filter === f}
                 className={`rounded-full border px-3 py-1.5 text-sm font-medium ${filter === f ? "border-ink bg-ink text-white" : "border-mist bg-surface text-muted hover:text-ink"}`}>
-                {f === "all" ? `All (${matches.length})` : fitLabel[f].text}
+                {f === "all" ? `All (${matches.length})` : `${f} (${matches.filter((m) => fitOf(m).text === f).length})`}
               </button>
             ))}
           </div>
@@ -74,7 +74,10 @@ export default function Results({ token }: { token: string }) {
           ) : (
             <ul className="space-y-4">
               {shown.map((m) => {
-                const fit = fitLabel[m.readiness];
+                const fit = fitOf(m);
+                const link = linkStatus(m);
+                const external = m.workflowMode === "external_link";
+                const gaps = m.missingToApply;
                 const cat = providerById(m.providerId);
                 const who = instructorName(m, names);
                 const known = m.requirementResults.filter((r) => r.stage === "application");
@@ -92,15 +95,34 @@ export default function Results({ token }: { token: string }) {
                         <Badge tone={fit.tone}>{fit.text}</Badge>
                       </div>
                       <p className="mt-3 max-w-2xl">{m.explanation}</p>
+                      {gaps.length > 0 && (
+                        <div className="mt-4">
+                          <p className="text-sm font-semibold">Still needed to apply</p>
+                          <ul className="mt-1.5 flex flex-wrap gap-2">
+                            {gaps.slice(0, 4).map((g) => <li key={g}><Badge tone="ocean">{g}</Badge></li>)}
+                            {gaps.length > 4 && <li className="self-center text-sm text-muted">+{gaps.length - 4} more</li>}
+                          </ul>
+                        </div>
+                      )}
                       <dl className="mt-4 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-3">
                         <div><dt className="text-muted">Known requirements</dt><dd className="font-medium">{known.filter((r) => r.result === "met").length} of {known.length} met</dd></div>
                         <div><dt className="text-muted">Fees</dt><dd className="font-medium">Not confirmed</dd></div>
                         <div><dt className="text-muted">Last checked</dt><dd className="font-medium">{formatDate(m.lastChecked)}{!m.requirementsVerified && " · not yet verified"}</dd></div>
                       </dl>
-                      <div className="mt-5">
+                      <div className="mt-5 flex flex-wrap items-center gap-3">
                         <Button onClick={() => navigate(`/s/${token}/providers/${m.providerId}${m.instructorId ? `?i=${m.instructorId}` : ""}`)}>
                           View provider
                         </Button>
+                        {m.instructorRequired && (
+                          <Button variant="secondary" onClick={() => navigate(`/s/${token}/providers/${m.providerId}/questions`)}>Choose or add the instructor</Button>
+                        )}
+                        {external && m.externalUrl && (
+                          <a href={m.externalUrl} target="_blank" rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 rounded-full border-2 border-ocean bg-surface px-5 py-2.5 font-semibold text-ocean hover:bg-foam">
+                            Apply on their site<span className="sr-only"> (opens in a new tab)</span>
+                          </a>
+                        )}
+                        <Badge tone={link.tone}>{link.text}</Badge>
                       </div>
                     </article>
                   </li>
