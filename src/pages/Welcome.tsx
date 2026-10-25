@@ -1,4 +1,5 @@
 import { Button, Jellyfish } from "../components/ui";
+import ImportPanel from "../features/intake/ImportPanel";
 import { navigate } from "../lib/router";
 import { savedToken } from "../lib/local";
 
@@ -11,9 +12,9 @@ export default function Welcome() {
         <p className="mt-5 max-w-xl text-lg text-muted">
           Discover nearby providers and prepare your application using your business information.
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Button onClick={() => navigate("/start")}>Find providers</Button>
-          <Button variant="secondary" onClick={() => navigate(token ? `/s/${token}/applications` : "/applications")}>
+        <div className="mt-8"><ImportPanel prominent /></div>
+        <div className="mt-5">
+          <Button variant="quiet" onClick={() => navigate(token ? `/s/${token}/applications` : "/applications")}>
             My applications
           </Button>
         </div>

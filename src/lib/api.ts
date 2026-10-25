@@ -2,16 +2,18 @@ import type {
   Application, ApplicationField, ExtractResponse, Studio, StudioProfileInput, InstructorInput,
 } from "../../shared/schemas";
 
-export type ApiFailure = { code: string; message: string; fieldErrors: Record<string, string[]> };
+export type ApiFailure = { code: string; message: string; fieldErrors: Record<string, string[]>; fallback?: string[] };
 export class ApiError extends Error {
   code: string;
   status: number;
   fieldErrors: Record<string, string[]>;
+  fallback: string[]; // what to offer instead, e.g. ["paste_text", "manual_entry"]
   constructor(status: number, f: ApiFailure) {
     super(f.message);
     this.status = status;
     this.code = f.code;
     this.fieldErrors = f.fieldErrors ?? {};
+    this.fallback = f.fallback ?? [];
   }
 }
 
@@ -81,8 +83,8 @@ export type QuestionsResponse = {
 export type AnswerIn = { field: string; value: string | boolean | number | string[] | null };
 
 export const api = {
-  extract: (url: string) =>
-    call<ExtractResponse>("/api/extract", { method: "POST", body: JSON.stringify({ url }) }),
+  extract: (input: { url: string } | { text: string }) =>
+    call<ExtractResponse>("/api/extract", { method: "POST", body: JSON.stringify(input) }),
 
   createStudio: (profile: StudioProfileInput, instructors: InstructorInput[]) =>
     call<{ token: string; studio: Studio }>("/api/profiles", { method: "POST", body: JSON.stringify({ profile, instructors }) }),
