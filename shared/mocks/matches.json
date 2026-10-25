@@ -1,0 +1,7 @@
+{
+  "matches": [
+    { "providerId": "silversneakers", "readiness": "missing_items", "missingToApply": [], "missingBeforeTeaching": ["Certificate of liability insurance upload", "W-9 (enter on provider site)"], "explanation": "Your studio offers group classes in Bellevue that suit older adults; you can apply now and finish paperwork during onboarding." },
+    { "providerId": "forma", "readiness": "ready", "missingToApply": [], "missingBeforeTeaching": [], "explanation": "Forma lists vendors that employees can spend wellness benefits on; you have everything needed to apply." },
+    { "providerId": "wellhub", "readiness": "missing_items", "missingToApply": ["Business phone number"], "missingBeforeTeaching": [], "explanation": "Wellhub pays partner studios per check-in; add a phone number to apply." }
+  ]
+}

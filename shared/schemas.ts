@@ -1,0 +1,163 @@
+import { z } from "zod";
+
+// ---------- Common ----------
+export const Provenance = z.enum(["owner_confirmed", "ai_draft", "owner_edited"]);
+export type Provenance = z.infer<typeof Provenance>;
+
+export const FieldMeta = z.object({
+  source: z.url().optional(), // page the value was extracted from
+  provenance: Provenance,
+});
+
+export const ApiError = z.object({ error: z.string(), details: z.unknown().optional() });
+export type ApiError = z.infer<typeof ApiError>;
+
+// ---------- Studio + instructors ----------
+export const InstructorInput = z.object({
+  id: z.uuid().optional(), // omit for new instructors
+  name: z.string().min(1).max(200),
+  cprCertified: z.boolean().optional(),
+  certifications: z.array(z.string().max(200)).max(20).default([]),
+});
+export type InstructorInput = z.infer<typeof InstructorInput>;
+
+export const StudioProfileInput = z.object({
+  name: z.string().min(1).max(200),
+  website: z.url().optional(),
+  address: z.string().max(300).optional(),
+  city: z.string().max(100),
+  state: z.string().max(50),
+  phone: z.string().max(50).optional(),
+  email: z.email().optional(),
+  contactName: z.string().max(200).optional(),
+  danceStyles: z.array(z.string().max(100)).max(30).default([]),
+  classTypes: z.array(z.string().max(100)).max(20).default([]),
+  schedulingPlatform: z.string().max(100).optional(),
+  hasLiabilityInsurance: z.boolean().optional(),
+  description: z.string().max(2000).optional(),
+  fieldMeta: z.record(z.string(), FieldMeta).default({}),
+});
+export type StudioProfileInput = z.infer<typeof StudioProfileInput>;
+
+export const Instructor = InstructorInput.extend({ id: z.uuid() });
+export type Instructor = z.infer<typeof Instructor>;
+
+export const Studio = z.object({
+  id: z.uuid(),
+  profile: StudioProfileInput,
+  instructors: z.array(Instructor),
+  created_at: z.string(),
+  updated_at: z.string(),
+});
+export type Studio = z.infer<typeof Studio>;
+
+// POST /api/profiles  -> CreateStudioResponse (token returned ONCE)
+// GET/PUT /api/profiles (header x-access-token) -> { studio }
+export const SaveStudioRequest = z.object({
+  profile: StudioProfileInput,
+  instructors: z.array(InstructorInput).max(50).default([]),
+});
+export type SaveStudioRequest = z.infer<typeof SaveStudioRequest>;
+export const CreateStudioResponse = z.object({ token: z.string(), studio: Studio });
+export type CreateStudioResponse = z.infer<typeof CreateStudioResponse>;
+
+// ---------- Extraction ----------
+// POST /api/extract { url } -> ExtractResponse
+export const ExtractRequest = z.object({ url: z.url() });
+export const ExtractResponse = z.object({
+  profile: StudioProfileInput.partial(),
+  missingFields: z.array(z.string()),
+  pagesRead: z.array(z.url()),
+});
+export type ExtractResponse = z.infer<typeof ExtractResponse>;
+
+// ---------- Providers + forms ----------
+export const RequirementStage = z.enum(["needed_to_apply", "needed_before_teaching"]);
+export const Requirement = z.object({
+  id: z.string(),
+  label: z.string(),
+  stage: RequirementStage,
+  profileField: z.string().optional(), // e.g. "hasLiabilityInsurance"
+  sensitive: z.boolean().default(false), // tax/bank: never stored, entered on provider site
+});
+export type Requirement = z.infer<typeof Requirement>;
+
+export const Provider = z.object({
+  id: z.string(), // "silversneakers" | "forma" | "wellhub"
+  name: z.string(),
+  summary: z.string(),
+  applicationUrl: z.url(),
+  submissionMethod: z.enum(["google_form_prefill", "copy_assist"]),
+  sourceUrl: z.url(),
+  lastChecked: z.string(), // ISO date
+  requirements: z.array(Requirement),
+});
+export type Provider = z.infer<typeof Provider>;
+
+export const FormQuestion = z.object({
+  id: z.string(),
+  label: z.string(), // exact question text from the provider form
+  type: z.enum(["short_text", "long_text", "email", "phone", "url", "number", "date", "single_choice", "multi_choice"]),
+  options: z.array(z.string()).optional(),
+  required: z.boolean(),
+  profileField: z.string().optional(), // fill from confirmed profile
+  draftable: z.boolean().default(false), // Claude may draft (narrative only)
+  sensitive: z.boolean().default(false),
+  googleEntryId: z.string().optional(), // "entry.123456" for Forma prefill
+});
+export type FormQuestion = z.infer<typeof FormQuestion>;
+
+export const FormSchema = z.object({
+  providerId: z.string(),
+  formUrl: z.url(),
+  version: z.string(),
+  capturedAt: z.string(),
+  questions: z.array(FormQuestion),
+});
+export type FormSchema = z.infer<typeof FormSchema>;
+
+// ---------- Matching ----------
+// POST /api/match (header x-access-token) -> { matches: MatchResult[] }
+export const MatchResult = z.object({
+  providerId: z.string(),
+  readiness: z.enum(["ready", "missing_items", "not_a_fit"]),
+  missingToApply: z.array(z.string()),
+  missingBeforeTeaching: z.array(z.string()),
+  explanation: z.string().optional(), // Claude; absent if Claude failed
+});
+export type MatchResult = z.infer<typeof MatchResult>;
+
+// ---------- Applications ----------
+export const ApplicationStatus = z.enum(["draft", "approved_for_copying", "submitted_owner_reported"]);
+export type ApplicationStatus = z.infer<typeof ApplicationStatus>;
+
+export const ApplicationField = z.object({
+  questionId: z.string(),
+  answer: z.string(),
+  provenance: Provenance,
+  needsInput: z.boolean().default(false), // required but unknown
+});
+export type ApplicationField = z.infer<typeof ApplicationField>;
+
+export const Application = z.object({
+  id: z.uuid(),
+  studioId: z.uuid(),
+  providerId: z.string(),
+  instructorId: z.uuid().nullable().default(null),
+  fields: z.array(ApplicationField),
+  status: ApplicationStatus,
+  prefillUrl: z.url().nullable().default(null), // Forma only
+  approvedAt: z.string().nullable().default(null),
+  submittedAt: z.string().nullable().default(null),
+  updatedAt: z.string(),
+});
+export type Application = z.infer<typeof Application>;
+
+// POST /api/draft { providerId } (header x-access-token) -> { application }
+// PATCH /api/applications?id=... (header x-access-token)
+export const UpdateApplicationRequest = z.discriminatedUnion("action", [
+  z.object({ action: z.literal("edit"), fields: z.array(ApplicationField) }), // resets to draft
+  z.object({ action: z.literal("approve") }),
+  z.object({ action: z.literal("mark_submitted") }),
+]);
+export type UpdateApplicationRequest = z.infer<typeof UpdateApplicationRequest>;

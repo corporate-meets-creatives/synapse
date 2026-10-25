@@ -1,0 +1,19 @@
+{
+  "application": {
+    "id": "33333333-3333-4333-8333-333333333333",
+    "studioId": "11111111-1111-4111-8111-111111111111",
+    "providerId": "forma",
+    "instructorId": null,
+    "fields": [
+      { "questionId": "name", "answer": "Diana", "provenance": "owner_confirmed", "needsInput": false },
+      { "questionId": "email", "answer": "hello@example.com", "provenance": "owner_confirmed", "needsInput": false },
+      { "questionId": "about", "answer": "We are an adaptive ballroom studio in Bellevue offering group and private classes for adults of all abilities.", "provenance": "ai_draft", "needsInput": false },
+      { "questionId": "phone", "answer": "", "provenance": "ai_draft", "needsInput": true }
+    ],
+    "status": "draft",
+    "prefillUrl": null,
+    "approvedAt": null,
+    "submittedAt": null,
+    "updatedAt": "2026-10-25T21:05:00Z"
+  }
+}
