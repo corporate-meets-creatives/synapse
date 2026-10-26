@@ -132,7 +132,7 @@ export default function Prepare({ token, id }: { token: string; id: string }) {
 
   return (
     <>
-      <Steps steps={APPLY_STEPS} current={3} />
+      <Steps steps={APPLY_STEPS} current={0} />
       <div className="mb-6 max-w-2xl">
         <h1 className="text-3xl sm:text-4xl">Prepare your {provider?.name ?? app.providerId} application</h1>
         <p className="mt-2 text-lg text-muted">
