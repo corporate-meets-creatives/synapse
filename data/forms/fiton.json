@@ -206,5 +206,31 @@
     }
   ],
   "applicantType": "studio",
-  "title": "FitOn Health fitness facility partner form"
+  "title": "FitOn Health fitness facility partner form",
+  "assistant": {
+    "adapter": "hubspot",
+    "site": {
+      "origin": "https://www.fitonhealth.com",
+      "pathPrefix": "/facilities"
+    }
+  },
+  "structureSnapshot": {
+    "fieldNames": [
+      "firstname",
+      "lastname",
+      "email",
+      "mobilephone",
+      "company",
+      "fitness_facility_type",
+      "website",
+      "about_facility",
+      "address",
+      "city",
+      "state",
+      "facility_scheduling_service",
+      "membership_retail_rate",
+      "membership_access_includes"
+    ],
+    "capturedAt": "2026-10-25"
+  }
 }

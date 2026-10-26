@@ -1,31 +1,13 @@
 import { confirmedValue as readConfirmed, isStudioFieldConfirmed } from "./confirm.js";
 import { DraftInputError, getForm } from "./form.js";
 import { draftNarratives, type CallNarrative, type Facts } from "./narrative.js";
-import type { AnswerField, DraftRequest, DraftResponse, FormDef, Question } from "./types.js";
+import { buildPrefill, verifyFormStructure, type FetchHtml, type PrefillResult } from "./prefill.js";
+import type { AnswerField, DraftRequest, DraftResponse, Question } from "./types.js";
 
 const blank = (v: unknown) => v === undefined || v === null || (typeof v === "string" && v.trim() === "") || (Array.isArray(v) && v.length === 0);
 const toText = (v: unknown): string => (typeof v === "boolean" ? (v ? "Yes" : "No") : Array.isArray(v) ? v.join(", ") : String(v));
 
-/**
- * Google Forms prefill link. The owner opens it, reviews, and submits on Google's page.
- * Unreviewed AI drafts are left out; once the owner edits/keeps an answer (owner_edited) a new draft call includes it.
- */
-export function buildPrefillUrl(form: FormDef, answers: AnswerField[]): string | null {
-  if (form.submissionMethod !== "google_form_prefill" || !form.formUrl) return null;
-  const byId = new Map(answers.filter((a) => a.provenance !== "ai_draft").map((a) => [a.questionId, a.answer]));
-  const params = new URLSearchParams({ usp: "pp_url" });
-  let n = 0;
-  for (const q of form.questions) {
-    const v = byId.get(q.id)?.trim();
-    if (q.googleEntryId && v) {
-      params.append(q.googleEntryId, v);
-      n++;
-    }
-  }
-  return n ? `${form.formUrl}?${params.toString()}` : null;
-}
-
-export async function buildDraft(req: DraftRequest, call?: CallNarrative): Promise<DraftResponse> {
+export async function buildDraft(req: DraftRequest, call?: CallNarrative, fetchHtml?: FetchHtml): Promise<DraftResponse> {
   const form = getForm(req.providerId);
   const warnings: string[] = [];
   const version = req.formVersion ?? form.version;
@@ -98,6 +80,18 @@ export async function buildDraft(req: DraftRequest, call?: CallNarrative): Promi
   }
 
   const answers = form.questions.map((q) => out.get(q.id)!);
+
+  // Pre-fill link (Google Forms): only reviewed answers, only on the official host, and only if the form still matches our mapping.
+  let prefill: PrefillResult | null = null;
+  if (form.submissionMethod === "google_form_prefill") {
+    const built = buildPrefill(form, answers);
+    const check = req.verifyForm ? await verifyFormStructure(form, fetchHtml) : { status: "unverified" as const, message: null };
+    const status = built.url === null && check.status !== "form_changed" ? "not_supported" : check.status;
+    prefill = {
+      ...built, status, message: check.message, checkedAt: req.verifyForm ? new Date().toISOString() : null,
+      url: status === "form_changed" || status === "not_supported" ? null : built.url,
+    };
+  }
   const byId = new Map(answers.map((a) => [a.questionId, a]));
   return {
     providerId: form.providerId,
@@ -110,7 +104,8 @@ export async function buildDraft(req: DraftRequest, call?: CallNarrative): Promi
     portalUrl: form.portalUrl,
     portalUrlVerified: form.portalUrlVerified,
     formUrl: form.formUrl ?? null,
-    prefillUrl: buildPrefillUrl(form, answers),
+    prefillUrl: prefill?.url ?? null,
+    prefill,
     instructorId: instructor?.id ?? null,
     answers,
     missingQuestionIds: form.questions.filter((q) => q.required && !q.sensitive && !q.declaration && byId.get(q.id)!.answer.trim() === "").map((q) => q.id),

@@ -117,12 +117,14 @@ export default function ProfileForm({
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">{text("name", "Business name")}</div>
             <div className="sm:col-span-2">{text("website", "Website", { placeholder: "yourstudio.com" })}</div>
-            {list("danceStyles", "Dance styles", "Ballroom, Latin, Ballet")}
-            <ClassTypePicker value={p.classTypes ?? []} badge={badge("classTypes")}
-              onChange={(next) => setP((cur) => ({
-                ...cur, classTypes: next,
-                fieldMeta: cur.fieldMeta?.classTypes ? { ...cur.fieldMeta, classTypes: { ...cur.fieldMeta.classTypes, provenance: "owner_edited" } } : cur.fieldMeta,
-              }))} />
+            <div className="sm:col-span-2">{list("danceStyles", "Dance styles", "Ballroom, Latin, Ballet")}</div>
+            <div className="sm:col-span-2">
+              <ClassTypePicker value={p.classTypes ?? []} badge={badge("classTypes")}
+                onChange={(next) => setP((cur) => ({
+                  ...cur, classTypes: next,
+                  fieldMeta: cur.fieldMeta?.classTypes ? { ...cur.fieldMeta, classTypes: { ...cur.fieldMeta.classTypes, provenance: "owner_edited" } } : cur.fieldMeta,
+                }))} />
+            </div>
             <div className="sm:col-span-2">{text("address", "Street address")}</div>
             {text("city", "City")}
             <div className="grid grid-cols-2 gap-4">{text("state", "State")}{text("zip", "ZIP code")}</div>

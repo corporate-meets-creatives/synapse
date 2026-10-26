@@ -202,7 +202,8 @@ export function buildQuestions(req: QuestionsRequest): QuestionsResponse {
       const a = r.asks[0];
       if (a && !seen.has(a.field)) {
         seen.add(a.field);
-        out.confirmed.push({ id: r.id, field: a.field, label: a.question, value: read(facts, a.field), basis: res.basis ?? basisOf(a.field, facts), result: res.result, editable: true });
+        const basis = res.basis ?? basisOf(a.field, facts);
+        out.confirmed.push({ id: r.id, field: a.field, label: a.question, value: read(facts, a.field), basis, result: res.result, editable: true, ...(basis === "extracted" ? { needsConfirmation: true } : {}) });
       }
       continue;
     }

@@ -104,5 +104,27 @@
     "Feedback for Forma Store"
   ],
   "applicantType": "studio",
-  "title": "Forma vendor form"
+  "title": "Forma vendor form",
+  "structureSnapshot": {
+    "entryIds": [
+      "entry.26432514",
+      "entry.1401174214",
+      "entry.1364368139",
+      "entry.884396131",
+      "entry.70062611",
+      "entry.1027720269",
+      "entry.1165442282",
+      "entry.1563896875",
+      "entry.958383559",
+      "entry.1286498179",
+      "entry.672636433",
+      "entry.350408855",
+      "entry.1828585741",
+      "entry.1154606953",
+      "entry.1214441742",
+      "entry.646269765",
+      "entry.945925355"
+    ],
+    "capturedAt": "2026-10-25"
+  }
 }

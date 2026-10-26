@@ -101,9 +101,9 @@ test("ClassPass and Wellhub: studio questions from requirements, skipping what i
 
 test("Forma: asks only owner-choice questions; answers feed /api/draft as owner-edited answers", async () => {
   const r = q({ providerId: "forma" });
-  assert.equal(r.readiness, null);
+  assert.equal(r.readiness?.fitLabel, "Potential fit");
   assert.deepEqual(ids(r).sort(), ["application.forma.intent", "application.forma.location_availability"].sort());
-  assert.ok(r.confirmed.some((c) => c.id === "forma.company_name"));
+  assert.ok(r.confirmed.some((c) => c.field === "studio.name"));
   const a = q({ providerId: "forma", answers: [{ field: "application.forma.intent", value: "I'm interested in the partnership opportunity with Forma." }, { field: "application.forma.location_availability", value: "Worldwide" }] });
   assert.equal(a.done, true);
   assert.equal(a.existingAnswers.length, 2);

@@ -12,9 +12,9 @@ const result = (m: MatchEntry, id: string) => m.requirementResults.find((r) => r
 
 const complete = { id: "a", name: "A", cprCertified: true, certifications: ["ACE Group Fitness"], requirementAnswers: { adultAttested: true, hasLiabilityInsurance: true } };
 
-test("catalog has the three providers; ClassPass/Wellhub are external links only", () => {
+test("catalog has all providers; ClassPass/Wellhub are external links only", () => {
   const ms = evaluateAll(req([complete]));
-  assert.deepEqual([...new Set(ms.map((m) => m.providerId))].sort(), ["classpass", "silversneakers", "wellhub"]);
+  assert.deepEqual([...new Set(ms.map((m) => m.providerId))].sort(), ["classpass", "fiton", "forma", "silversneakers", "wellhub"]);
   for (const id of ["classpass", "wellhub"]) {
     const m = ms.find((x) => x.providerId === id)!;
     assert.equal(m.workflowMode, "external_link");

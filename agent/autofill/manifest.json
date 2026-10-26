@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Wellyfish assistant",
+  "version": "0.1.0",
+  "description": "Fills your reviewed Wellyfish answers into one supported application form. You review and press Submit yourself.",
+  "permissions": ["storage"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://wellyfish20.vercel.app/*", "http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["core.js", "bridge.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.fitonhealth.com/facilities*"],
+      "js": ["core.js", "fill.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
