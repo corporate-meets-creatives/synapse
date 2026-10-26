@@ -32,6 +32,10 @@ export const FormDef = z.object({
   portalUrlVerified: z.boolean(),
   verifiedSource: z.object({ url: z.url().optional(), verifiedBy: z.string().optional(), verifiedAt: z.string().optional() }).nullable(),
   capturedAt: z.string(),
+  /** Question ids the live form had when we mapped it; a different set means the form changed. */
+  structureSnapshot: z.object({ entryIds: z.array(z.string()).optional(), fieldNames: z.array(z.string()).optional(), capturedAt: z.string() }).optional(),
+  /** Browser assistant (agent/autofill): which adapter fills this form, and the only site it may act on. */
+  assistant: z.object({ adapter: z.enum(["hubspot"]), site: z.object({ origin: z.url(), pathPrefix: z.string() }) }).optional(),
   questions: z.array(Question).min(1),
 });
 export type FormDef = z.infer<typeof FormDef>;
@@ -65,6 +69,8 @@ export const DraftRequest = z.object({
   instructor: DraftInstructor.optional(), // exactly one instructor per request (required for instructor-level forms)
   existingAnswers: z.array(AnswerField).max(100).default([]),
   regenerateQuestionIds: z.array(z.string()).max(100).default([]),
+  /** Check that the live form still matches our mapping before offering a pre-filled link (reads the public form). */
+  verifyForm: z.boolean().optional(),
 });
 export type DraftRequest = z.infer<typeof DraftRequest>;
 
@@ -80,6 +86,7 @@ export interface DraftResponse {
   submissionMethod: "google_form_prefill" | "copy_assist";
   formUrl: string | null;
   prefillUrl: string | null; // Google Forms only: opens the form with answers pre-filled; the owner submits
+  prefill: import("./prefill.js").PrefillResult | null; // link status plus what was filled, skipped or couldn't be used
   instructorId: string | null;
   answers: AnswerField[]; // one per question, in form order
   missingQuestionIds: string[]; // required, still blank

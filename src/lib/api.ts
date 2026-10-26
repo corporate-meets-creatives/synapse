@@ -87,14 +87,25 @@ export type AnswerIn = { field: string; value: string | boolean | number | strin
 export type FormQuestion = {
   id: string; label: string; type: "short_text" | "long_text" | "email" | "phone" | "url" | "number" | "date" | "single_choice" | "multi_choice";
   options?: string[]; required: boolean; helpText?: string; draftable?: boolean; sensitive?: boolean; declaration?: boolean; section?: string;
+  hubspotField?: string; googleEntryId?: string; // where the browser assistant / prefill link puts this answer
 };
 export type FormDef = {
   providerId: string; title: string; version: string; isDemo: boolean; notice?: string; portalUrl: string | null;
   applicantType: "studio" | "instructor"; questions: FormQuestion[];
+  submissionMethod?: "google_form_prefill" | "copy_assist"; formUrl?: string;
+  structureSnapshot?: { entryIds?: string[]; fieldNames?: string[]; capturedAt: string };
+  assistant?: { adapter: "hubspot"; site: { origin: string; pathPrefix: string } }; // the one site the browser assistant may fill
+};
+export type PrefillResult = {
+  url: string | null; status: "ok" | "unverified" | "form_changed" | "not_supported"; message: string | null; checkedAt: string | null;
+  filled: { questionId: string; label: string }[];
+  skipped: { questionId: string; label: string; reason: "blank" | "unreviewed_ai_draft" | "portal_only" | "no_prefill_field" }[];
+  failed: { questionId: string; label: string; reason: "not_an_option" }[];
 };
 export type DraftResponse = {
   providerId: string; formVersion: string; isDemo: boolean; notice: string | null; portalUrl: string | null;
   answers: ApplicationField[]; missingQuestionIds: string[]; aiDraftedQuestionIds: string[]; ownerOnlyQuestionIds: string[]; warnings: string[];
+  prefillUrl?: string | null; prefill?: PrefillResult | null; // Google Forms: link status plus what was filled, skipped or couldn't be used
 };
 
 export const api = {
@@ -133,12 +144,12 @@ export const api = {
     }),
 
   form: (providerId: string) => call<FormDef>(`/api/draft?providerId=${encodeURIComponent(providerId)}`),
-  draft: (studio: Studio, providerId: string, instructorId: string | null, existingAnswers: ApplicationField[] = [], regenerateQuestionIds: string[] = []) => {
+  draft: (studio: Studio, providerId: string, instructorId: string | null, existingAnswers: ApplicationField[] = [], regenerateQuestionIds: string[] = [], verifyForm = false) => {
     const i = instructorId ? studio.instructors.find((x) => x.id === instructorId) : undefined;
     return call<DraftResponse>("/api/draft", {
       method: "POST",
       body: JSON.stringify({
-        providerId, studio: studio.profile, studioConfirmed: true, existingAnswers, regenerateQuestionIds,
+        providerId, studio: studio.profile, studioConfirmed: true, existingAnswers, regenerateQuestionIds, verifyForm,
         instructor: i ? { id: i.id, name: i.name, confirmed: true, cprCertified: i.cprCertified, certifications: i.certifications, requirementAnswers: i.requirementAnswers ?? {} } : undefined,
       }),
     });

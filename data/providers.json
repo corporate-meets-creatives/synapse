@@ -483,6 +483,226 @@
         "note": "Sign-up link supplied in the strategists' form list; HTTP 200 on 2026-10-25 (page is a JavaScript app, so its fields were not read).",
         "checkedAt": "2026-10-25"
       }
+    },
+    {
+      "id": "forma",
+      "name": "Forma",
+      "summary": "Wellness benefits marketplace. Studios submit Forma's public vendor form; you review and submit it yourself.",
+      "applicantType": "studio",
+      "workflowMode": "prepare_application",
+      "applicationUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfZ2MIqhMc6kgnPQw0Hio3uMyuK6lLHqPIWTlT9hSf1zC4xtQ/viewform",
+      "applicationUrlVerified": true,
+      "linkEvidence": {
+        "status": "team_provided",
+        "note": "Vendor form link supplied in the strategists' list; its questions were read directly from the public Google Form on 2026-10-25.",
+        "checkedAt": "2026-10-25"
+      },
+      "sourceUrls": [
+        "https://docs.google.com/forms/d/e/1FAIpQLSfZ2MIqhMc6kgnPQw0Hio3uMyuK6lLHqPIWTlT9hSf1zC4xtQ/viewform"
+      ],
+      "lastChecked": "2026-10-25",
+      "requirementsVerified": false,
+      "requirements": [
+        {
+          "id": "forma.business_name",
+          "label": "Business name",
+          "missingLabel": "Business name",
+          "stage": "application",
+          "hardBlocker": false,
+          "rule": {
+            "all": [
+              {
+                "field": "studio.name",
+                "op": "nonempty"
+              }
+            ]
+          },
+          "asks": [
+            {
+              "field": "studio.name",
+              "question": "What is your business name?",
+              "type": "text",
+              "why": "The Forma vendor form asks for your company name."
+            }
+          ]
+        },
+        {
+          "id": "forma.website",
+          "label": "Company website",
+          "missingLabel": "Website",
+          "stage": "application",
+          "hardBlocker": false,
+          "rule": {
+            "all": [
+              {
+                "field": "studio.website",
+                "op": "nonempty"
+              }
+            ]
+          },
+          "asks": [
+            {
+              "field": "studio.website",
+              "question": "What is your website?",
+              "type": "text",
+              "why": "The Forma vendor form asks for your company website."
+            }
+          ]
+        },
+        {
+          "id": "forma.contact",
+          "label": "Contact name and email",
+          "missingLabel": "Contact name and email",
+          "stage": "application",
+          "hardBlocker": false,
+          "rule": {
+            "all": [
+              {
+                "field": "studio.contactName",
+                "op": "nonempty"
+              },
+              {
+                "field": "studio.email",
+                "op": "nonempty"
+              }
+            ]
+          },
+          "asks": [
+            {
+              "field": "studio.contactName",
+              "question": "Who is the contact person?",
+              "type": "text",
+              "why": "Forma asks for a contact name."
+            },
+            {
+              "field": "studio.email",
+              "question": "What is the contact email?",
+              "type": "text",
+              "why": "Forma asks for a contact email."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fiton",
+      "name": "FitOn Health",
+      "summary": "Corporate wellness benefit for fitness facilities. Studios submit FitOn's partner form; you review and submit it yourself.",
+      "applicantType": "studio",
+      "workflowMode": "prepare_application",
+      "applicationUrl": "https://www.fitonhealth.com/facilities",
+      "applicationUrlVerified": true,
+      "linkEvidence": {
+        "status": "team_provided",
+        "note": "Link supplied in the strategists' list; the partner form's fields were read from the page's public form definition on 2026-10-25.",
+        "checkedAt": "2026-10-25"
+      },
+      "sourceUrls": [
+        "https://www.fitonhealth.com/facilities"
+      ],
+      "lastChecked": "2026-10-25",
+      "requirementsVerified": false,
+      "requirements": [
+        {
+          "id": "fiton.business_name",
+          "label": "Fitness location name",
+          "missingLabel": "Business name",
+          "stage": "application",
+          "hardBlocker": false,
+          "rule": {
+            "all": [
+              {
+                "field": "studio.name",
+                "op": "nonempty"
+              }
+            ]
+          },
+          "asks": [
+            {
+              "field": "studio.name",
+              "question": "What is your business name?",
+              "type": "text",
+              "why": "FitOn asks for the fitness location's name."
+            }
+          ]
+        },
+        {
+          "id": "fiton.contact",
+          "label": "Contact email and phone",
+          "missingLabel": "Contact email and phone",
+          "stage": "application",
+          "hardBlocker": false,
+          "rule": {
+            "all": [
+              {
+                "field": "studio.email",
+                "op": "nonempty"
+              },
+              {
+                "field": "studio.phone",
+                "op": "nonempty"
+              }
+            ]
+          },
+          "asks": [
+            {
+              "field": "studio.email",
+              "question": "What is your contact email?",
+              "type": "text",
+              "why": "FitOn asks for an email."
+            },
+            {
+              "field": "studio.phone",
+              "question": "What is your mobile or business phone?",
+              "type": "text",
+              "why": "FitOn asks for a mobile phone number."
+            }
+          ]
+        },
+        {
+          "id": "fiton.address",
+          "label": "Street address, city and state",
+          "missingLabel": "Street address",
+          "stage": "application",
+          "hardBlocker": false,
+          "rule": {
+            "all": [
+              {
+                "field": "studio.address",
+                "op": "nonempty"
+              },
+              {
+                "field": "studio.city",
+                "op": "nonempty"
+              },
+              {
+                "field": "studio.state",
+                "op": "nonempty"
+              }
+            ]
+          },
+          "asks": [
+            {
+              "field": "studio.address",
+              "question": "What is your street address?",
+              "type": "text",
+              "why": "FitOn asks for the facility's address."
+            },
+            {
+              "field": "studio.city",
+              "question": "Which city?",
+              "type": "text",
+              "why": "FitOn asks for the facility's city."
+            },
+            {
+              "field": "studio.state",
+              "question": "Which state?",
+              "type": "text",
+              "why": "FitOn asks for the facility's state."
+            }
+          ]
+        }
+      ]
     }
   ]
 }

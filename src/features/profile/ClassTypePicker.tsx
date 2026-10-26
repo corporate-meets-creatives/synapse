@@ -17,30 +17,33 @@ export default function ClassTypePicker({ value, onChange, badge, id = "classTyp
     setOther("");
   };
 
-  const pill = (checked: boolean) =>
-    `flex cursor-pointer items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors ${checked ? "border-ocean bg-foam text-ocean-deep" : "border-mist bg-surface hover:border-ocean"}`;
-
   return (
-    <fieldset className="space-y-2.5">
+    <fieldset className="space-y-3">
       <legend className="flex flex-wrap items-center gap-2 font-semibold">Services and class types {badge}</legend>
+      <p className="text-sm text-muted">Select everything you offer.</p>
       <div className="flex flex-wrap gap-2">
-        {[...CLASS_TYPE_OPTIONS, ...extras].map((o) => (
-          <label key={o} className={pill(has(o))}>
-            <input type="checkbox" className="h-4 w-4 accent-[#2f5bea]" checked={has(o)} onChange={() => toggle(o)} />
-            {o}
-          </label>
-        ))}
+        {[...CLASS_TYPE_OPTIONS, ...extras].map((o) => {
+          const on = has(o);
+          return (
+            <label key={o} className="relative cursor-pointer">
+              <input type="checkbox" className="peer sr-only" checked={on} onChange={() => toggle(o)} />
+              <span className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-ocean peer-focus-visible:ring-offset-2 ${on ? "border-ocean bg-ocean text-white" : "border-mist bg-surface text-ink hover:border-ocean hover:bg-foam"}`}>
+                {on && <span aria-hidden="true" className="text-xs">✓</span>}
+                {o}
+              </span>
+            </label>
+          );
+        })}
       </div>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex max-w-md items-center gap-2">
         <label htmlFor={`${id}-other`} className="sr-only">Add another service or class type</label>
-        <input id={`${id}-other`} type="text" value={other} placeholder="Something else you offer"
+        <input id={`${id}-other`} type="text" value={other} placeholder="Add something else you offer"
           onChange={(e) => setOther(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addOther(); } }}
-          className="min-w-[14rem] flex-1 rounded-field border border-mist bg-surface px-3.5 py-2 text-sm placeholder:text-muted/70" />
+          className="min-w-0 flex-1 rounded-field border border-mist bg-surface px-3.5 py-2 text-sm placeholder:text-muted/70" />
         <button type="button" onClick={addOther} disabled={!other.trim()}
-          className="rounded-full border-2 border-ocean px-4 py-1.5 text-sm font-semibold text-ocean hover:bg-foam disabled:cursor-not-allowed disabled:opacity-50">Add</button>
+          className="shrink-0 rounded-full border-2 border-ocean px-4 py-1.5 text-sm font-semibold text-ocean hover:bg-foam disabled:cursor-not-allowed disabled:border-mist disabled:text-muted disabled:hover:bg-transparent">Add</button>
       </div>
-      <p className="text-sm text-muted">Check everything that applies.</p>
     </fieldset>
   );
 }
