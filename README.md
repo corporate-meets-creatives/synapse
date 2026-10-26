@@ -6,7 +6,7 @@ Oct 25, 2026 · Claude Impact Lab Hackathon, Seattle
 
 **Wellyfish:** takes the thinking out of applying to corporate and wellness benefit hub vendors for small businesses, starting with FitOn Health (today's use case with the ability to scale to other platforms in the future). The owner types the studio's name, the agent fills the FitOn facility intake form, then the owner clicks Submit. Members with employer- or health-plan-funded fitness credits can then book the studio's classes.
 
-**Mission:** connect small to mid-sized creative businesses to the wellness dollars employers and health plans have already set aside, so burned-out people get to dance and studios get paid.
+**Mission:** connect small to mid-sized creative businesses to the wellness dollars employers and health plans have already set aside, so burned-out people get to dance and studios will get paid. 
 
 ## The Problem
 
