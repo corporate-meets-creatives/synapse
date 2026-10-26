@@ -9,7 +9,16 @@ export const FieldMeta = z.object({
   provenance: Provenance,
 });
 
-export const ApiError = z.object({ error: z.string(), details: z.unknown().optional() });
+// Every endpoint returns errors in this one shape. fieldErrors maps a field path ("profile.name") to messages.
+// /api/extract may add `fallback`: what the UI should offer next ("paste_text", "manual_entry").
+export const ApiError = z.object({
+  error: z.object({
+    code: z.string(),
+    message: z.string(), // safe to show to the owner
+    fieldErrors: z.record(z.string(), z.array(z.string())).default({}),
+    fallback: z.array(z.enum(["paste_text", "manual_entry"])).optional(),
+  }),
+});
 export type ApiError = z.infer<typeof ApiError>;
 
 // ---------- Studio + instructors ----------

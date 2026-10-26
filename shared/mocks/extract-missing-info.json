@@ -1,0 +1,17 @@
+{
+  "profile": {
+    "website": "https://example.com",
+    "name": "Eastside Ballroom Collective",
+    "city": "Bellevue",
+    "state": "WA",
+    "danceStyles": ["Ballroom", "Latin"],
+    "fieldMeta": {
+      "name": { "source": "https://example.com", "provenance": "ai_draft" },
+      "city": { "source": "https://example.com/contact", "provenance": "ai_draft" },
+      "state": { "source": "https://example.com/contact", "provenance": "ai_draft" },
+      "danceStyles": { "source": "https://example.com/classes", "provenance": "ai_draft" }
+    }
+  },
+  "missingFields": ["address", "phone", "email", "contactName", "classTypes", "schedulingPlatform", "description", "hasLiabilityInsurance"],
+  "pagesRead": ["https://example.com", "https://example.com/contact", "https://example.com/classes"]
+}

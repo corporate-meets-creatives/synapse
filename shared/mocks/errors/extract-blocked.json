@@ -1,0 +1,1 @@
+{ "error": { "code": "source_blocked", "message": "That page needs a login, so we can't read it. Paste your business text instead, or enter details manually.", "fieldErrors": {}, "fallback": ["paste_text", "manual_entry"] } }
