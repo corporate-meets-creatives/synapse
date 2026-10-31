@@ -27,9 +27,9 @@ export function Shell({ children }: { children: ReactNode }) {
   const path = usePath();
   const token = savedToken.get();
   const nav = [
-    { to: "/start", label: "Find providers", active: path === "/start" || path.endsWith("/results") || path.includes("/providers/") },
+    { to: "/start", label: "Start an application", active: path === "/start" || path.endsWith("/results") || path.includes("/providers/") },
+    { to: token ? `/s/${token}/profile` : "/applications", label: "Your studio", active: path.endsWith("/profile") },
     { to: token ? `/s/${token}/applications` : "/applications", label: "My applications", active: path.endsWith("/applications") || path.includes("/apply/") },
-    { to: token ? `/s/${token}/profile` : "/start", label: "Business profile", active: path.endsWith("/profile") },
   ];
   return (
     <div className="min-h-screen">
@@ -49,6 +49,15 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-4 pb-24 pt-8">{children}</main>
+      <footer className="border-t border-mist bg-surface">
+        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-8 text-sm text-muted sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-xl space-y-1">
+            <p>Wellyfish helps small studios discover and apply to wellness benefit vendors to grow their customer base.</p>
+            <p className="font-semibold text-ink">We write, you review and submit. Wellyfish never submits for you.</p>
+          </div>
+          <a href="https://github.com/corporate-meets-creatives/synapse" target="_blank" rel="noreferrer" className="font-semibold text-ocean underline">About this project</a>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -69,13 +69,13 @@ export default function Done({ token, id }: { token: string; id: string }) {
 
   return (
     <>
-      <Steps steps={APPLY_STEPS} current={submitted ? 3 : 2} />
+      <Steps steps={APPLY_STEPS} current={submitted ? 4 : 3} />
       <div className="mb-6 max-w-2xl">
         {submitted ? (
           <>
             <h1 className="text-3xl sm:text-4xl">Submitted to {provider?.name}</h1>
             <p className="mt-2 text-lg text-muted">You told us you submitted on {formatDate(app.submittedAt)}. {provider?.name} will reply to you directly.</p>
-            <div className="mt-3"><Badge tone="lagoon">Submitted · owner-reported</Badge></div>
+            <div className="mt-3"><Badge tone="lagoon">Submitted by you</Badge></div>
           </>
         ) : (
           <>
@@ -121,7 +121,7 @@ export default function Done({ token, id }: { token: string; id: string }) {
           )}
           {ownerOnly.length > 0 && (
             <div className="mt-5 rounded-field border border-mist bg-foam p-4">
-              <p className="font-semibold">Complete these yourself on {provider?.name ?? "the provider"}'s site</p>
+              <p className="font-semibold">Complete these yourself on {provider?.name ?? "the vendor"}'s site</p>
               <p className="mt-1 text-sm text-muted">We never enter tax details, bank details, signatures or declarations for you.</p>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">{ownerOnly.map((q) => <li key={q.id}>{q.label}</li>)}</ul>
             </div>

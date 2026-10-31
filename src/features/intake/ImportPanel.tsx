@@ -26,7 +26,7 @@ export default function ImportPanel({ prominent = false }: { prominent?: boolean
           <input id="site" type="text" inputMode="url" autoComplete="url" placeholder="yourstudio.com or facebook.com/yourstudio"
             value={imp.url} onChange={(e) => imp.setUrl(e.target.value)}
             className="min-w-0 flex-1 rounded-field border border-mist bg-surface px-4 py-3 text-lg text-ink placeholder:text-muted/70" />
-          <Button type="submit" disabled={!imp.url.trim()} className="whitespace-nowrap px-6 py-3 text-lg">Find opportunities</Button>
+          <Button type="submit" disabled={!imp.url.trim()} className="whitespace-nowrap px-6 py-3 text-lg">Start with your studio site</Button>
         </div>
       </form>
       <p className="text-sm text-muted">

@@ -25,12 +25,12 @@ export default function Applications({ token }: { token: string }) {
 
   return (
     <>
-      <PageTitle sub="Status updates come from you. Providers reply to you directly, not to Wellyfish.">My applications</PageTitle>
+      <PageTitle sub="Your drafts are saved to a private link, not an account. You submit each application yourself.">My applications</PageTitle>
       {apps.length === 0 ? (
         <Panel className="max-w-xl">
           <h2 className="text-xl">No applications yet</h2>
-          <p className="mt-1 text-muted">Find a provider that fits your studio and we'll prepare the application with you.</p>
-          <Button className="mt-4" onClick={() => navigate(`/s/${token}/results`)}>Find providers</Button>
+          <p className="mt-1 text-muted">Start with your studio name and we'll draft the first one for your review.</p>
+          <Button className="mt-4" onClick={() => navigate(`/s/${token}/results`)}>Start with your studio</Button>
         </Panel>
       ) : (
         <ul className="space-y-4">
@@ -48,7 +48,7 @@ export default function Applications({ token }: { token: string }) {
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <Badge tone={s.tone}>{s.text}</Badge>
-                      {a.status === "submitted_owner_reported" && <span className="text-xs text-muted">Owner-reported</span>}
+                      
                     </div>
                   </div>
                   <div className="text-sm sm:text-right">

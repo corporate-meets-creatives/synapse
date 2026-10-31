@@ -38,7 +38,7 @@ export default function Review({ token, id }: { token: string; id: string }) {
 
   return (
     <>
-      <Steps steps={APPLY_STEPS} current={1} />
+      <Steps steps={APPLY_STEPS} current={3} />
       <div className="mb-6 max-w-2xl">
         <h1 className="text-3xl sm:text-4xl">Review what will be shared</h1>
         <p className="mt-2 text-lg text-muted">
@@ -86,7 +86,7 @@ export default function Review({ token, id }: { token: string; id: string }) {
             )}
             {form?.isDemo && <p className="mt-3 text-sm font-medium text-[#5a3fc0]">Example form: these questions are placeholders, not the vendor's real application.</p>}
             <p className="mt-4 text-sm text-muted">
-              {provider?.name ?? "The provider"} may ask you to accept terms or sign declarations on their website. We never accept those for you.
+              {provider?.name ?? "The vendor"} may ask you to accept terms or sign declarations on their website. We never accept those for you.
             </p>
             {fail && <div className="mt-4"><Notice tone="coral" title={fail} /></div>}
             <Button className="mt-5 w-full" busy={busy} disabled={missing.length > 0} onClick={approve}>Approve these answers</Button>

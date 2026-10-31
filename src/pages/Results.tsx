@@ -10,7 +10,7 @@ import { fitOf, FIT_TEXTS, linkStatus, type FitText } from "../lib/labels";
 import { formatDate, providerById } from "../lib/catalog";
 import { NotFoundLink } from "./NotFound";
 
-const STAGES = ["Finding providers", "Checking service areas", "Comparing requirements"];
+const STAGES = ["Finding wellness benefit vendors", "Checking what each one asks for", "Comparing with your studio details"];
 const strip = { lagoon: "bg-lagoon", jelly: "bg-jelly", coral: "bg-coral" } as const;
 
 const instructorName = (m: MatchEntry, names: Record<string, string>) => (m.instructorId ? names[m.instructorId] : null);
@@ -29,7 +29,7 @@ export default function Results({ token }: { token: string }) {
     const t = [setTimeout(() => setStage(1), 1200), setTimeout(() => setStage(2), 2600)];
     api.match(studio)
       .then((r) => { if (live) { matchCache.set(token, r.matches); setMatches(r.matches); } })
-      .catch((e) => { if (live) setFail(e instanceof ApiError ? e.message : "We couldn't compare providers."); })
+      .catch((e) => { if (live) setFail(e instanceof ApiError ? e.message : "We couldn't compare vendors."); })
       .finally(() => t.forEach(clearTimeout));
     return () => { live = false; t.forEach(clearTimeout); };
   }, [studio, matches, token]);
@@ -42,12 +42,12 @@ export default function Results({ token }: { token: string }) {
 
   return (
     <>
-      <Steps steps={INTAKE_STEPS} current={3} />
+      <Steps steps={INTAKE_STEPS} current={2} />
       <PageTitle sub={
         <>Near {studio.profile.city}, {studio.profile.state}{need?.category ? ` · ${need.category.toLowerCase()}` : ""}.{" "}
           <Link to={`/s/${token}/need`} className="font-semibold text-ocean">Change</Link></>
       }>
-        Providers matching your business needs
+        Gaps to confirm with each vendor
       </PageTitle>
 
       {fail && <Notice tone="coral" title={fail}><Button variant="quiet" onClick={() => { setFail(null); setMatches(null); }}>Try again</Button></Notice>}
@@ -68,8 +68,8 @@ export default function Results({ token }: { token: string }) {
           </div>
 
           {shown.length === 0 ? (
-            <Notice title="No providers match these filters">
-              Every provider we track is shown under “All”. Try another filter, or update your profile so we can check more requirements.
+            <Notice title="No vendors match these filters">
+              Every vendor we track is shown under “All”. Try another filter, or update your profile so we can check more requirements.
             </Notice>
           ) : (
             <ul className="space-y-4">
@@ -111,7 +111,7 @@ export default function Results({ token }: { token: string }) {
                       </dl>
                       <div className="mt-5 flex flex-wrap items-center gap-3">
                         <Button onClick={() => navigate(`/s/${token}/providers/${m.providerId}${m.instructorId ? `?i=${m.instructorId}` : ""}`)}>
-                          View provider
+                          View vendor
                         </Button>
                         {m.instructorRequired && (
                           <Button variant="secondary" onClick={() => navigate(`/s/${token}/providers/${m.providerId}/questions`)}>Choose or add the instructor</Button>
@@ -131,7 +131,7 @@ export default function Results({ token }: { token: string }) {
             </ul>
           )}
           <p className="mt-6 text-sm text-muted">
-            We haven't confirmed availability or acceptance with any provider. Each card shows what we could check from public sources.
+            Vendors screen studios and decide for themselves; we haven't confirmed acceptance with any of them. Each card shows only what we could check from public sources.
           </p>
         </>
       )}

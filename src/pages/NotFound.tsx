@@ -31,10 +31,10 @@ export function OpenLink() {
   };
   return (
     <>
-      <PageTitle sub="Your applications are saved to a private link, not an account.">My applications</PageTitle>
+      <PageTitle sub="Your drafts are saved to a private link, not an account. You submit each application yourself.">My applications</PageTitle>
       <Panel className="max-w-xl">
         <form onSubmit={submit} className="space-y-4">
-          <TextField id="link" label="Your private link" value={v} error={err} placeholder="https://…/s/…" onChange={(e) => setV(e.target.value)} />
+          <TextField id="link" label="Your private applications link" value={v} error={err} placeholder="https://…/s/…" onChange={(e) => setV(e.target.value)} />
           <div className="flex flex-wrap gap-3">
             <Button type="submit">Open my applications</Button>
             <Button type="button" variant="secondary" onClick={() => navigate("/start")}>Start a new profile</Button>

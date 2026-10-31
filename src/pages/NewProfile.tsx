@@ -35,8 +35,8 @@ export default function NewProfile() {
   return (
     <>
       <Steps steps={INTAKE_STEPS} current={1} />
-      <PageTitle sub={imports && !full ? "Check what we found, fix anything that's off, and confirm." : "Tell us about your studio. You can change any of this later."}>
-        {imports && !full ? "Your business at a glance" : "Review your business profile"}
+      <PageTitle sub={imports && !full ? "Check what we found, fix anything that's off, and confirm." : "Edit anything that's wrong. Anything we couldn't confirm is flagged below. We don't guess."}>
+        {imports && !full ? "Your business at a glance" : "Review what we'll put on the vendor form"}
       </PageTitle>
       {imports && full && (
         <div className="mb-6 max-w-2xl">

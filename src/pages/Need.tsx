@@ -20,7 +20,7 @@ export default function Need({ token }: { token: string }) {
   return (
     <>
       <Steps steps={INTAKE_STEPS} current={2} />
-      <PageTitle sub="This helps us explain why each provider fits. You can change it any time.">
+      <PageTitle sub="This helps us explain how each wellness benefit vendor could fit. You can change it any time.">
         What does your business need help with?
       </PageTitle>
       <div className="mb-6 max-w-2xl"><PrivateLink token={token} /></div>
@@ -50,7 +50,7 @@ export default function Need({ token }: { token: string }) {
             <TextField id="n-budget" label="Funding amount you're looking for" value={n.budget} placeholder="$5,000"
               onChange={(e) => set("budget", e.target.value)} />
           )}
-          <Button type="submit">Find matching providers</Button>
+          <Button type="submit">Find matching vendors</Button>
         </Panel>
       </form>
     </>

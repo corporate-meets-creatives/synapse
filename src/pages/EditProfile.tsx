@@ -13,7 +13,7 @@ export default function EditProfile({ token }: { token: string }) {
   if (!studio) return <Loading label="Loading your profile" />;
   return (
     <>
-      <PageTitle sub="Changes here are used for new matches and new applications.">Business profile</PageTitle>
+      <PageTitle sub="Changes here are used for new matches and new applications.">Your studio</PageTitle>
       {saved && <div className="mb-6 max-w-2xl"><Notice tone="lagoon" title="Profile saved" /></div>}
       <div className="mb-6 max-w-2xl"><PrivateLink token={token} compact /></div>
       <ProfileForm

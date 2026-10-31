@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type { InstructorInput, StudioProfileInput } from "../../shared/schemas";
 import { Badge, Button, Notice, Panel, TextArea, TextField } from "./ui";
-import { INSTRUCTOR_QUESTIONS } from "../lib/labels";
+import { INSTRUCTOR_QUESTIONS, PROGRAM_QUESTIONS } from "../lib/labels";
 import ClassTypePicker from "../features/profile/ClassTypePicker";
 
 type Meta = StudioProfileInput["fieldMeta"];
@@ -50,7 +50,8 @@ export default function ProfileForm({
     const m = meta[k];
     const value = (p as Record<string, unknown>)[k];
     const empty = value === undefined || value === "" || (Array.isArray(value) && !value.length);
-    if (empty && (REQUIRED.includes(k as TextKey) || missingFields.includes(k))) return <Badge tone="coral">Needs your input</Badge>;
+    if (empty && missingFields.includes(k)) return <Badge tone="coral">Couldn't confirm — check this</Badge>;
+    if (empty && REQUIRED.includes(k as TextKey)) return <Badge tone="coral">Needs your input</Badge>;
     if (m?.provenance === "ai_draft") return (
       <Badge tone="jelly">From website{m.source && <a className="ml-1 underline" href={m.source} target="_blank" rel="noreferrer">source</a>}</Badge>
     );
@@ -113,7 +114,7 @@ export default function ProfileForm({
     <form onSubmit={submit} className="grid gap-6 lg:grid-cols-[1fr_20rem]" noValidate>
       <div className="space-y-6">
         <Panel>
-          <h2 className="mb-4 text-xl">Business</h2>
+          <h2 className="mb-4 text-xl">Business details</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">{text("name", "Business name")}</div>
             <div className="sm:col-span-2">{text("website", "Website", { placeholder: "yourstudio.com" })}</div>
@@ -139,10 +140,10 @@ export default function ProfileForm({
           </div>
         </Panel>
         <Panel>
-          <h2 className="mb-4 text-xl">About your studio</h2>
-          {text("description", "Brief business description", { long: true, hint: "Two or three sentences providers will read first." })}
+          <h2 className="mb-4 text-xl">Pitch to vendors</h2>
+          {text("description", "Brief business description", { long: true, hint: "Two or three sentences a vendor will read first: what you teach, who it's for, and why your classes fit their members." })}
           <details className="mt-5">
-            <summary className="cursor-pointer font-semibold text-ocean">More details some providers ask for</summary>
+            <summary className="cursor-pointer font-semibold text-ocean">More details some vendors ask for</summary>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               {text("legalStructure", "Legal structure", { placeholder: "LLC, nonprofit…" })}
               <TextField id="f-years" label="Years operating" type="number" min={0} value={p.yearsOperating ?? ""}
@@ -154,7 +155,7 @@ export default function ProfileForm({
         </Panel>
         <Panel>
           <h2 className="text-xl">Instructors</h2>
-          <p className="mb-4 text-sm text-muted">Some programs accept each instructor separately. Answer what you know; leave the rest as “Not sure”.</p>
+          <p className="mb-4 text-sm text-muted">Vendors screen instructors, so we ask about certification, age, and insurance per instructor. Answer what you know; leave the rest as “Not sure”.</p>
           <div className="space-y-4">
             {instructors.map((ins, idx) => (
               <div key={ins.id ?? idx} className="rounded-field border border-mist p-4">
@@ -177,6 +178,20 @@ export default function ProfileForm({
                       }} />
                   ))}
                 </div>
+                <details className="mt-3">
+                  <summary className="cursor-pointer text-sm font-semibold text-ocean">Program-specific questions (optional)</summary>
+                  <p className="mt-2 text-sm text-muted">Some senior-fitness programs ask these separately.</p>
+                  <div className="divide-y divide-mist">
+                  {PROGRAM_QUESTIONS.map((q) => (
+                    <TriState key={q.key} id={`ins-${idx}-${q.key}`} label={q.label} value={ins.requirementAnswers?.[q.key]}
+                      onChange={(v) => {
+                        const ans = { ...(ins.requirementAnswers ?? {}) };
+                        if (v === undefined) delete ans[q.key]; else ans[q.key] = v;
+                        updateInstructor(idx, { requirementAnswers: ans });
+                      }} />
+                  ))}
+                  </div>
+                </details>
               </div>
             ))}
             <Button type="button" variant="secondary"
@@ -190,6 +205,7 @@ export default function ProfileForm({
       <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
         <Panel>
           <h2 className="text-xl">Studio checks</h2>
+          <p className="mt-1 text-sm text-muted">These are the facility and reputation checks vendors commonly ask about.</p>
           <div className="mt-2 divide-y divide-mist">
             <TriState id="s-ins" label="Liability insurance" value={p.hasLiabilityInsurance} onChange={(v) => setP((c) => ({ ...c, hasLiabilityInsurance: v }))} />
             <TriState id="s-price" label="Public price list" value={p.hasPriceList} onChange={(v) => setP((c) => ({ ...c, hasPriceList: v }))} />
@@ -200,7 +216,7 @@ export default function ProfileForm({
         <Panel>
           <label className="flex gap-3">
             <input type="checkbox" className="mt-1 h-5 w-5 accent-[#2f5bea]" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} />
-            <span>I've checked these details and they're accurate.</span>
+            <span>I've checked these details and they're accurate.<span className="mt-1 block text-sm text-muted">Nothing is submitted until you submit it to the vendor yourself.</span></span>
           </label>
           {error && <div className="mt-4"><Notice tone="coral" title={error} /></div>}
           <Button type="submit" busy={busy} className="mt-5 w-full">{submitLabel}</Button>

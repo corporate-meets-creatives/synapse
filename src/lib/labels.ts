@@ -20,20 +20,23 @@ export function linkStatus(m: MatchEntry): { text: string; tone: "lagoon" | "jel
 
 // Backend statuses shown with the dashboard's wording.
 export function statusLabel(a: Application): { text: string; tone: "lagoon" | "jelly" | "coral" | "ocean"; next: string } {
+  // Only three owner-facing statuses. Wellyfish never submits, so it's always "Submitted by you".
   if (a.status === "submitted_owner_reported")
-    return { text: "Submitted", tone: "lagoon", next: "Wait for the provider to reply" };
+    return { text: "Submitted by you", tone: "lagoon", next: "Wait for the vendor to reply" };
   if (a.status === "approved_for_copying")
-    return { text: "Ready for external submission", tone: "ocean", next: "Finish on the provider's website" };
-  if (a.fields.some((f) => f.needsInput))
-    return { text: "Draft", tone: "coral", next: "Answer the remaining questions" };
-  return { text: "Ready for review", tone: "jelly", next: "Review and approve your answers" };
+    return { text: "Ready for you to submit", tone: "ocean", next: "Submit it on the vendor's website" };
+  return { text: "Draft — ready for your review", tone: "jelly", next: a.fields.some((f) => f.needsInput) ? "Fill the flagged answers" : "Review and approve your answers" };
 }
 
 // Instructor yes/no questions the matcher reads. Never collects tax or bank details.
 export const INSTRUCTOR_QUESTIONS: { key: string; label: string }[] = [
   { key: "adultAttested", label: "18 or older" },
   { key: "hasTeachingCertification", label: "Has a group fitness or teaching certification" },
-  { key: "teachesSignatureClasses", label: "Wants to teach SilverSneakers signature classes" },
-  { key: "hasSpecialtyCertification", label: "Has a specialty certification for that format" },
   { key: "hasLiabilityInsurance", label: "Has professional liability insurance" },
+];
+
+// Asked only by some senior-fitness programs: shown in an optional, labelled section.
+export const PROGRAM_QUESTIONS: { key: string; label: string }[] = [
+  { key: "teachesSignatureClasses", label: "Wants to teach a senior-fitness program's own signature classes" },
+  { key: "hasSpecialtyCertification", label: "Has a specialty certification for that class format" },
 ];

@@ -243,7 +243,7 @@ export default function Questions({ token, providerId }: { token: string; provid
                   <p className="text-sm text-muted">Only {res.providerName} decides eligibility. This isn't a confirmation. {dirty && "Press “Update my fit” to see the effect of your new answers."}</p>
                 </>
               ) : <p className="text-sm text-muted">Your answers go straight into the application form for {res.providerName}.</p>}
-              <button type="button" className="text-sm text-ocean underline" onClick={() => navigate(back)}>Back to provider</button>
+              <button type="button" className="text-sm text-ocean underline" onClick={() => navigate(back)}>Back to vendor</button>
             </Panel>
           </aside>
         </div>
