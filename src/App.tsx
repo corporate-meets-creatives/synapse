@@ -14,12 +14,16 @@ import Review from "./pages/Review";
 import Done from "./pages/Done";
 import Applications from "./pages/Applications";
 import NotFound, { OpenLink } from "./pages/NotFound";
+import About from "./pages/About";
+import WhatIsLsa from "./pages/WhatIsLsa";
 
 const routes: [string, (p: Record<string, string>) => ReactNode][] = [
   ["/", () => <Welcome />],
   ["/start", () => <Start />],
   ["/profile/new", () => <NewProfile />],
   ["/applications", () => <OpenLink />],
+  ["/about", () => <About />],
+  ["/what-is-an-lsa", () => <WhatIsLsa />],
   ["/s/:token/need", (p) => <Need token={p.token} />],
   ["/s/:token/results", (p) => <Results token={p.token} />],
   ["/s/:token/providers/:providerId", (p) => <ProviderDetail token={p.token} providerId={p.providerId} />],
