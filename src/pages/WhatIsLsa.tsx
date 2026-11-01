@@ -57,7 +57,7 @@ export default function WhatIsLsa() {
             </div>
             <p className="mt-1 text-sm text-muted">FitOn Health, Wellhub, ClassPass</p>
             <ul className="mt-4 list-disc space-y-2 pl-5">
-              <li>Employers and health plans give members monthly credits. A yoga class might cost 8 credits.</li>
+              <li>Employers and health plans give members monthly credits.</li>
               <li>Credits only work at gyms and studios in the vendor's network. <strong>If your studio isn't listed, members can't find you.</strong></li>
               <li>To get listed, you apply to the vendor. Wellyfish drafts that application.</li>
             </ul>
