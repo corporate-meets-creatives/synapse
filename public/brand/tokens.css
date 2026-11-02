@@ -6,7 +6,7 @@
  * If you change a value in src/index.css, change it here too.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Figtree:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Figtree:wght@400;500;600;700&display=swap");
 
 :root {
   /* ---- Brand ---- */
@@ -39,13 +39,13 @@
   --gradient-halo: linear-gradient(135deg, #dbe7ff 0%, #ece7fd 50%, #fde6ef 100%);
 
   /* ---- Type ---- */
-  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
   --font-sans: "Figtree", system-ui, sans-serif;
 
   /* ---- Shape ---- */
-  --radius-field: 0.75rem;  /* 12px: inputs, notices */
-  --radius-panel: 1.25rem;  /* 20px: panels, cards */
-  --radius-full: 9999px;    /* buttons, badges, nav pills */
+  --radius-field: 0.5rem;   /* 8px: inputs, notices, buttons, nav */
+  --radius-panel: 0.75rem;  /* 12px: panels, cards */
+  --radius-full: 9999px;    /* badges, step dots */
 
   /* ---- Focus ---- */
   --focus-ring: 3px solid var(--color-ocean);

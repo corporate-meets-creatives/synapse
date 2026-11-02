@@ -143,7 +143,7 @@ export default function ProviderDetail({ token, providerId }: { token: string; p
               </p>
               {entry.externalUrl && (
                 <a href={entry.externalUrl} target="_blank" rel="noopener noreferrer"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ocean px-5 py-2.5 font-semibold text-white hover:bg-ocean-deep">
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-field bg-ocean px-5 py-2.5 font-semibold text-white hover:bg-ocean-deep">
                   Apply on their site<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               )}

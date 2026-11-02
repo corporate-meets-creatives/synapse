@@ -17,21 +17,21 @@
   --color-mist: #dbe5f6;       /* borders */
   --color-surface: #ffffff;
 
-  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
   --font-sans: "Figtree", system-ui, sans-serif;
 
-  --radius-field: 0.75rem;
-  --radius-panel: 1.25rem;
+  --radius-field: 0.5rem;
+  --radius-panel: 0.75rem;
 }
 
 @layer base {
   html { background: var(--color-foam); color: var(--color-ink); }
   body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
   :focus-visible { outline: 3px solid var(--color-ocean); outline-offset: 2px; border-radius: 6px; }
 }
 
 /* The one orchestrated motion: the welcome jellyfish drifts. */
-@keyframes drift { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+@keyframes drift { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
 .drift { animation: drift 6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .drift { animation: none; } }

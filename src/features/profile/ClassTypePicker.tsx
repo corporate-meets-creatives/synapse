@@ -42,7 +42,7 @@ export default function ClassTypePicker({ value, onChange, badge, id = "classTyp
           onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addOther(); } }}
           className="min-w-0 flex-1 rounded-field border border-mist bg-surface px-3.5 py-2 text-sm placeholder:text-muted/70" />
         <button type="button" onClick={addOther} disabled={!other.trim()}
-          className="shrink-0 rounded-full border-2 border-ocean px-4 py-1.5 text-sm font-semibold text-ocean hover:bg-foam disabled:cursor-not-allowed disabled:border-mist disabled:text-muted disabled:hover:bg-transparent">Add</button>
+          className="shrink-0 rounded-field border-2 border-ocean px-4 py-1.5 text-sm font-semibold text-ocean hover:bg-foam disabled:cursor-not-allowed disabled:border-mist disabled:text-muted disabled:hover:bg-transparent">Add</button>
       </div>
     </fieldset>
   );

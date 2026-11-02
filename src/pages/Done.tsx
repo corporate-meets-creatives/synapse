@@ -13,7 +13,7 @@ import { NotFoundLink } from "./NotFound";
 function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) {
   const [copied, setCopied] = useState(false);
   return (
-    <button type="button" className="rounded-full border border-mist px-3 py-1 text-sm font-semibold text-ocean hover:bg-foam"
+    <button type="button" className="rounded-field border border-mist px-3 py-1 text-sm font-semibold text-ocean hover:bg-foam"
       onClick={async () => { try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch { /* clipboard blocked */ } }}>
       {copied ? "Copied" : label}
     </button>
@@ -133,13 +133,13 @@ export default function Done({ token, id }: { token: string; id: string }) {
               <h2 className="text-xl">Submit on their site</h2>
               {prefillUrl && (
                 <a href={prefillUrl} target="_blank" rel="noopener noreferrer"
-                  className="mt-4 flex w-full items-center justify-center rounded-full bg-ocean px-5 py-2.5 font-semibold text-white no-underline hover:bg-ocean-deep">
+                  className="mt-4 flex w-full items-center justify-center rounded-field bg-ocean px-5 py-2.5 font-semibold text-white no-underline hover:bg-ocean-deep">
                   Open the form with my answers filled in<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               )}
               {portal && (
                 <a href={portal} target="_blank" rel="noopener noreferrer"
-                  className={`${prefillUrl ? "mt-3 border-2 border-ocean bg-surface text-ocean hover:bg-foam" : "mt-4 bg-ocean text-white hover:bg-ocean-deep"} flex w-full items-center justify-center rounded-full px-5 py-2.5 font-semibold no-underline`}>
+                  className={`${prefillUrl ? "mt-3 border-2 border-ocean bg-surface text-ocean hover:bg-foam" : "mt-4 bg-ocean text-white hover:bg-ocean-deep"} flex w-full items-center justify-center rounded-field px-5 py-2.5 font-semibold no-underline`}>
                   Open {provider?.name ?? "vendor"} portal<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               )}

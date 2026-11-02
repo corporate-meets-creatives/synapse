@@ -30,6 +30,7 @@ export function Shell({ children }: { children: ReactNode }) {
     { to: "/start", label: "Start an application", active: path === "/start" || path.endsWith("/results") || path.includes("/providers/") },
     { to: token ? `/s/${token}/profile` : "/applications", label: "Your studio", active: path.endsWith("/profile") },
     { to: token ? `/s/${token}/applications` : "/applications", label: "My applications", active: path.endsWith("/applications") || path.includes("/apply/") },
+    { to: "/about", label: "About", active: path === "/about" },
   ];
   return (
     <div className="min-h-screen">
@@ -41,21 +42,23 @@ export function Shell({ children }: { children: ReactNode }) {
           <nav className="flex flex-wrap gap-1 text-sm font-medium">
             {nav.map((n) => (
               <Link key={n.label} to={n.to}
-                className={cx("rounded-full px-3 py-1.5 no-underline", n.active ? "bg-ink text-white" : "text-muted hover:bg-foam hover:text-ink")}>
+                className={cx("rounded-field px-3 py-1.5 no-underline", n.active ? "bg-ink text-white" : "text-muted hover:bg-foam hover:text-ink")}>
                 {n.label}
               </Link>
             ))}
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-4 pb-24 pt-8">{children}</main>
-      <footer className="border-t border-mist bg-surface">
-        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-8 text-sm text-muted sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-xl space-y-1">
-            <p>Wellyfish helps small studios discover and apply to wellness benefit vendors to grow their customer base.</p>
-            <p className="font-semibold text-ink">We write, you review and submit. Wellyfish never submits for you.</p>
+      <main className="mx-auto max-w-5xl px-4 pb-12 pt-8">{children}</main>
+      <footer className="mx-auto max-w-5xl px-4 pb-10">
+        <div className="flex flex-col gap-6 rounded-panel bg-ink px-6 py-8 text-white sm:flex-row sm:items-center sm:justify-between sm:px-10">
+          <p className="max-w-xl font-display text-xl leading-snug sm:text-2xl">
+            Wellyfish helps small studios discover and apply to wellness benefit vendors to grow their customer base.
+          </p>
+          <div className="flex shrink-0 gap-6 font-semibold">
+            <Link to="/about" className="text-white underline underline-offset-4">About</Link>
+            <a href="https://github.com/corporate-meets-creatives/synapse" target="_blank" rel="noreferrer" className="text-white underline underline-offset-4">GitHub</a>
           </div>
-          <a href="https://github.com/corporate-meets-creatives/synapse" target="_blank" rel="noreferrer" className="font-semibold text-ocean underline">About this project</a>
         </div>
       </footer>
     </div>
@@ -69,7 +72,7 @@ export function Button({ variant = "primary", busy, className, children, disable
       {...rest}
       disabled={disabled || busy}
       className={cx(
-        "inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-field px-5 py-2.5 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         variant === "primary" && "bg-ocean text-white hover:bg-ocean-deep",
         variant === "secondary" && "border-2 border-ocean bg-surface text-ocean hover:bg-foam",
         variant === "quiet" && "text-ocean underline-offset-4 hover:underline px-2",

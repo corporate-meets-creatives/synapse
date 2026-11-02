@@ -28,7 +28,7 @@ export default function PrivateLink({ token, compact = false }: { token: string;
         <input readOnly value={url} aria-label="Your private applications link" onFocus={(e) => e.currentTarget.select()}
           className="min-w-0 flex-1 rounded-field border border-mist bg-surface px-3 py-2 text-sm text-ink" />
         <button type="button" onClick={copy}
-          className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white hover:bg-ocean-deep">
+          className="rounded-field bg-ink px-4 py-2 text-sm font-semibold text-white hover:bg-ocean-deep">
           {state === "copied" ? "Copied" : "Copy link"}
         </button>
       </div>

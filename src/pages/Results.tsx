@@ -61,7 +61,7 @@ export default function Results({ token }: { token: string }) {
           <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filter by fit">
             {(["all", ...FIT_TEXTS] as const).map((f) => (
               <button key={f} onClick={() => setFilter(f)} aria-pressed={filter === f}
-                className={`rounded-full border px-3 py-1.5 text-sm font-medium ${filter === f ? "border-ink bg-ink text-white" : "border-mist bg-surface text-muted hover:text-ink"}`}>
+                className={`rounded-field border px-3 py-1.5 text-sm font-medium ${filter === f ? "border-ink bg-ink text-white" : "border-mist bg-surface text-muted hover:text-ink"}`}>
                 {f === "all" ? `All (${matches.length})` : `${f} (${matches.filter((m) => fitOf(m).text === f).length})`}
               </button>
             ))}
@@ -118,7 +118,7 @@ export default function Results({ token }: { token: string }) {
                         )}
                         {external && m.externalUrl && (
                           <a href={m.externalUrl} target="_blank" rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full border-2 border-ocean bg-surface px-5 py-2.5 font-semibold text-ocean hover:bg-foam">
+                            className="inline-flex items-center gap-2 rounded-field border-2 border-ocean bg-surface px-5 py-2.5 font-semibold text-ocean hover:bg-foam">
                             Apply on their site<span className="sr-only"> (opens in a new tab)</span>
                           </a>
                         )}
